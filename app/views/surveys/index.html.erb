@@ -1,0 +1,63 @@
+<h1>Manage surveys</h1>
+<p>Here you can create, delete or edit survey templates.</p>
+<h3>Survey templates</h3>
+<ul class="list-group">
+    <% @surveys.each do |survey| %>
+        <li class="list-group-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <%= link_to survey.title, survey %>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-muted"><%= survey.description %></span>
+                    </div>
+                    <div class="col-md-3">
+                        <%= link_to 'New', survey_survey_runs_path(survey), method: :post %> |
+                        <%= link_to 'Show', survey %> |
+                        <%= link_to 'Edit', edit_survey_path(survey) %> |
+                        <%= link_to 'Delete', survey, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <% end %>
+</ul>
+
+<p>
+    <%= link_to 'New Survey', new_survey_path, class: "btn btn-primary"%>
+</p>
+
+
+<h3>Survey instances</h3>
+<% if @survey_runs.empty? then %>
+    <p>No survey instances have been created.</p>
+<% else %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Template</th>
+                <th>Created at</th>
+                <th>Responses</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @survey_runs.each do |run| %>
+                <tr <%= if(run.active?) then "class=active" end %>>
+                    <td><%= run.survey.title %></td>
+                    <td><%= run.created_at %></td>
+                    <td><%= run.survey_responses.size %></td>
+                    <td>
+                        <%= if(run.active?) then "Active" else
+                            link_to 'Activate', survey_survey_run_path(run.survey,run, active: true), method: :patch end %>
+                    </td>
+                    <td>
+                        <%= if(!run.active?) then link_to 'Remove', survey_survey_run_path(run.survey, run), method: :delete, confirm: 'Are you sure?' end %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% end %>

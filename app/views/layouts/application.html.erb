@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AttitudeSurvey</title>
+        <%= include_gon %>
+        <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+        <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <div id="wrap">
+
+            <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <%= link_to 'TRUMP Privacy Survey', root_path, class: "navbar-brand" %>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <% if SurveyRun.exists?(active: true) %>
+                            <li><%= link_to 'New response', new_survey_response_path %>
+                            <% end %>
+                            <li><a href="#">Help</a></li></ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><%= link_to 'Admin', surveys_path %></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                    <div class="collapse navbar-collapse">
+
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+
+            <div id="central-container" class="container">
+                <%= yield %>
+            </div>
+
+        </div>
+
+
+        <div id="footer">
+            <div class="container">
+                <p class="text-muted credit">Study conducted by the <a href="http://www.trump-india-uk.org.uk">TRUMP Project</a> at the <a href="http://www.abdn.ac.uk">University of Aberdeen</a>.</p>
+            </div>
+        </div>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,11 @@
+<% if @survey.recipients.empty? %>
+  <p>This survey has no recipients.</p>
+<% else %>
+  <ul class="list-group">
+    <% @survey.recipients.each do |recipient| %>
+      <li class="list-group-item">
+        <%= recipient.role %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

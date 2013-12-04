@@ -1,0 +1,100 @@
+/*
+ * Require the fluid squares css to get the cards to work.
+ */
+
+.card-drop-area {
+  border-style: dashed;
+  border-color: #18bc9c;
+  color: #18bc9c;
+  border-width: 2px;
+  border-radius: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  z-index: -1;
+}
+
+.hover {
+  border-style: solid;
+  background: #effeff;
+
+}
+
+
+.card {
+  /*display: table-cell;*/
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  position: absolute;
+  padding: 10px;
+  height: 50px;
+  width: 150px;
+  text-align: center;
+  color: #fff;
+  border-color: #149c82;
+  background: #18bc9c;
+}
+
+.inactive {
+  background: #fff;
+  color: #18bc9c;
+}
+
+.card-spaced {
+  margin-left: 30px;
+
+}
+
+.card.ui-draggable-dragging {
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}
+
+#card-deck {
+  border-style: dashed;
+  border-color: #18bc9c;
+  border-radius: 5px;
+  border-width: 2px;
+  position: absolute;
+  z-order: -1;
+  height: 50px;
+  width: 150px;
+  
+}
+
+/* Two Column */
+
+@media screen and (min-width:500px) {
+  .card-drop-area {
+    width: 47%;
+    margin: 0 3% 20px 0;
+    padding-bottom: 39%;
+  }
+}
+
+/* Three Column */
+
+@media screen and (min-width:800px) {
+  .card-drop-area {
+    width: 31%;
+    margin: 0 2% 20px 0;
+    padding-bottom: 24%;
+  }
+}
+
+/* Four Column 
+
+@media screen and (min-width:1200px) {
+.card-drop-area {
+width: 23%;
+margin: 20px 2% 0 0;
+padding-bottom: 23%;
+}
+} */
+
+.card-drop-area_container {
+  
+
+}

@@ -1,0 +1,61 @@
+class SurveyResponsesController < ApplicationController
+
+  def new
+    session[:survey_response_id] ||= nil
+    session[:current_phase] ||= SurveyResponse.phases.first
+    @survey_run = SurveyRun.find_by(active: true)
+    @survey = @survey_run.survey
+
+    # set up a new response linking to this survey run (and so survey template)
+    # get from DB if there is an ID in session
+    if session[:survey_response_id]
+      @survey_response = SurveyResponse.find(session[:survey_response_id])
+    else
+      @survey_response = @survey_run.survey_responses.build
+    end
+
+    # add the card placements
+    @survey.cards.each do |card|
+      @survey_response.card_placements.build(card_id: card.id)
+    end
+  end
+
+  def create
+    # get currently active survey run and its survey
+    @survey_run = SurveyRun.find_by(active: true)
+    @survey = @survey_run.survey
+
+    @survey_response = SurveyResponse.new(survey_response_params)
+    @survey_response.save
+    session[:survey_response_id] = @survey_response.id
+
+    if session[:current_phase] == SurveyResponse.phases.last
+      # now that we are finished, clear the session to allow a repeat entry
+      session[:current_phase] = session[:survey_response_params] = nil
+      redirect_to @survey_response
+    elsif params[:back]
+      session[:current_phase] = SurveyResponse.phases[SurveyResponse.phases.index(session[:current_phase])-1]
+    else
+      # store current phase in session so view behaves properly
+      session[:current_phase] = SurveyResponse.phases[SurveyResponse.phases.index(session[:current_phase])+1]
+    end
+    render :new
+  end
+
+
+  def update
+    @survey_response = SurveyResponse.find(session[:survey_response_id])
+    @survey_response.update(survey_responses_params)
+  end
+
+
+  def show
+    @survey_response = SurveyResponse.find(params[:id])
+  end
+
+
+  private
+  def survey_response_params
+    params.require(:survey_response).permit(:id, :rnid, :back, :current_phase, card_placements_attributes: [:id, :card_id, :sensitivity_category_id], sharing_pref_attributes: [:id, :recipient_id, :card_id])
+  end
+end

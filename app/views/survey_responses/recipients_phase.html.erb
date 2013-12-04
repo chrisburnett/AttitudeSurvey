@@ -1,0 +1,39 @@
+<%= form_for @survey_response do |s| %>
+
+    <% # integer division gives us the number of rows
+    cat_count = @survey.sensitivity_categories.count
+    row_count = (cat_count/3)
+    if cat_count%3 > 0
+        then row_count = row_count + 1
+    end
+    col_count = 3 # hardcoding this - want 3 columns
+    categories = @survey.sensitivity_categories.to_a.dup
+    %>
+    <div class="container-fixed card-drop-area-container">
+        <% row_count.times do %>
+            <div class="row">
+                <% col_count.times do %>
+                    <% category = categories.shift %>
+                    <div class="col-xs-4 card-drop-area" id="category-<%= category[:id] %>">
+                        <h1><%= category[:title] %></h1>
+                        <% @survey_response.card_placements.select { |cp| cp.sensitivity_category.id == category[:id]}.each do |placement| %>
+                            <div class="row">
+                                <% card = placement.card %>
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-danger" id="card-<%= card.id %>" data-toggle="button">
+                                        <%= card.title %>
+                                    </button>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+    <%= s.hidden_field :rnid, value: "testval" %>
+    <p><%= s.submit "Back", class: "btn btn-default", name: "back" unless session[:current_phase] == SurveyResponse.phases.first %></p>
+    <p><%= s.submit "Next", class: "btn btn-primary" %></p>
+
+<% end %>

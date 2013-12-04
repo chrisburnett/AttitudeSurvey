@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Survey: <%= @survey.title %></h1>
+<p><%= @survey.description %></p>
+
+<p>
+  <h3>Cards</h3>
+  <%= render 'card_list' %>
+</p>
+
+<p>
+    <h3>Categories</h3>
+    <%= render 'category_list' %>
+</p>
+
+<p>
+    <h3>Recipients</h3>
+    <%= render 'recipient_list' %>
+</p>
+
+
+<div class="btn-group">
+  <%= link_to 'Edit', edit_survey_path(@survey), class: "btn btn-default" %>
+  <%= link_to 'Back', surveys_path, class: "btn btn-default" %>
+</div>

@@ -1,0 +1,14 @@
+<fieldset>
+    <div class="row">
+        <div class="col-md-5">
+    <%= f.text_field :role, class: "form-control input-sm", placeholder: "Recipient name" %>
+        </div>
+        <div class="col-md-5">
+    <%= f.text_field :description, class: "form-control input-sm", placeholder: "Recipient descriptive text" %>
+        </div>
+        <div class="col-md-2">
+            <%= f.hidden_field :_destroy %>
+            <%= link_to "Remove", '#', class: "remove_fields" %>
+
+        </div>
+</fieldset>

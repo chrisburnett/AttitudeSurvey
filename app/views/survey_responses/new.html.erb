@@ -1,0 +1,72 @@
+<div id="help-area">
+    <p>please see attached for details of a seminar by guest speaker Koen Salemink this Friday 6th at 2pm in Macrobert room 810. It promises to be a very interesting seminar and discussion, we hope to see as many of you there as possible.
+</p>
+</div>
+
+<hr/>
+<%= form_for @survey_response, remote: true do |s| %>
+
+    <%
+    cat_count = @survey.sensitivity_categories.count
+    # integer division gives us the number of rows
+    row_count = (cat_count/3)
+    if cat_count%3 > 0
+        then row_count = row_count + 1
+    end
+    col_count = 3 # hardcoding this - want 3 columns
+    categories = @survey.sensitivity_categories.to_a.dup
+    %>
+
+    <div class="container-fixed card-drop-area-container">
+        <% row_count.times do %>
+            <div class="row">
+                <% col_count.times do %>
+                    <% category = categories.shift %>
+                    <div class="col-xs-4 card-drop-area" id="category-<%= category[:id] %>">
+                        <h1><%= category[:title] %></h1>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+
+    <hr/>
+
+    <div class="container">
+        <div class="row">
+            <div id="categories-control-area" class="col-md-8" id="card-info">
+                <p>Some text about the card goes here which gives some information like in the paper.</p>
+            </div>
+            <div class="col-md-4 pull-right">
+                <div id="card-deck" class="btn-group"></div>
+                <% @survey.cards.each do |card| %>
+                    <div class="card movable" id="card-<%= card.id %>">
+                        <%= card.title %>&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-ok"></span>
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+    <div id="recipients-control-area" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <p>Please click on the items that you would be happy with sharing with a:</p>
+            </div>
+            <div class="col-md-9">
+                <div id="recipient-name-header"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <%= s.fields_for :card_placements do |cp| %>
+        <%= render "card_placement_fields", f: cp %>
+    <% end %>
+
+    <p><button type="button" class="btn btn-primary" id="next-button">Next</button></p>
+    <!-- Show this using JS to indicate moving to the next whole-page step -->
+    <p id="submit-button"><%= s.submit "Next", class: "btn btn-primary" %></p>
+<% end %>

@@ -1,0 +1,11 @@
+<% if @survey.sensitivity_categories.empty? %>
+  <p>This survey has no categories.</p>
+<% else %>
+  <ul class="list-group">
+    <% @survey.sensitivity_categories.each do |category| %>
+      <li class="list-group-item">
+        <%= category.title %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

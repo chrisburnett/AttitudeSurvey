@@ -1,0 +1,14 @@
+
+
+Started POST "/survey_responses" for 10.8.0.14 at 2013-12-04 06:33:19 +0000
+Processing by SurveyResponsesController#create as JS
+  Parameters: {"utf8"=>"✓", "survey_response"=>{"card_placements_attributes"=>{"0"=>{"card_id"=>"68", "sensitivity_category_id"=>"32"}, "1"=>{"card_id"=>"69", "sensitivity_category_id"=>"40"}}}}
+  SurveyRun Load (0.1ms)  SELECT "survey_runs".* FROM "survey_runs" WHERE "survey_runs"."active" = 't' LIMIT 1
+   (0.0ms)  begin transaction
+  SQL (0.4ms)  INSERT INTO "survey_responses" ("created_at", "survey_run_id", "updated_at") VALUES (?, ?, ?)  [["created_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00], ["survey_run_id", 15], ["updated_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00]]
+  SurveyRun Load (0.1ms)  SELECT "survey_runs".* FROM "survey_runs" WHERE "survey_runs"."id" = ? ORDER BY "survey_runs"."id" ASC LIMIT 1  [["id", 15]]
+  SQL (29.5ms)  UPDATE "survey_runs" SET "count_of_survey_responses" = COALESCE("count_of_survey_responses", 0) + 1 WHERE "survey_runs"."id" = 15
+  SQL (0.4ms)  INSERT INTO "card_placements" ("card_id", "created_at", "sensitivity_category_id", "survey_response_id", "updated_at") VALUES (?, ?, ?, ?, ?)  [["card_id", 68], ["created_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00], ["sensitivity_category_id", 32], ["survey_response_id", 189], ["updated_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00]]
+  SQL (0.2ms)  INSERT INTO "card_placements" ("card_id", "created_at", "sensitivity_category_id", "survey_response_id", "updated_at") VALUES (?, ?, ?, ?, ?)  [["card_id", 69], ["created_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00], ["sensitivity_category_id", 40], ["survey_response_id", 189], ["updated_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00]]
+   (2.7ms)  commit transaction
+Completed 200 OK in 44ms (Views: 0.4ms | ActiveRecord: 33.4ms)

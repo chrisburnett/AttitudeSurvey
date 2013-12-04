@@ -1,0 +1,65 @@
+<%= form_for(@survey, html: { class: "form-horizontal"}) do |f| %>
+    <% if @survey.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
+
+            <ul>
+                <% @survey.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+        <%= f.label :title, class: "col-sm-2 control-label" %>
+        <div class="col-sm-5">
+            <%= f.text_field :title, class: "form-control" %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <%= f.label :description, class: "col-sm-2 control-label" %>
+        <div class="col-sm-5">
+            <%= f.text_field :description, class: "form-control" %>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Cards</h3>
+
+                <%= f.fields_for :cards do |c| %>
+                    <%= render "card_fields", f: c %>
+                <% end %>
+                <%= link_to_add_fields "Add card", f, :cards %>
+            </div>
+            <div class="col-md-6">
+                 <h3>Categories</h3>
+
+                <%= f.fields_for :sensitivity_categories do |sc| %>
+                    <%= render "sensitivity_category_fields", f: sc %>
+                <% end %>
+                <%= link_to_add_fields "Add category", f, :sensitivity_categories %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Recipients</h3>
+
+                <%= f.fields_for :recipients do |r| %>
+                    <%= render "recipient_fields", f: r %>
+                <% end %>
+                <%= link_to_add_fields "Add recipient", f, :recipients %>
+            </div>
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+
+    <div class="actions">
+        <%= f.submit class: 'btn btn-primary' %>
+    </div>
+<% end %>

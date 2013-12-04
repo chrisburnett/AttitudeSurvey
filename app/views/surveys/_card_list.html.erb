@@ -1,0 +1,11 @@
+<% if @survey.cards.empty? %>
+  <p>This survey has no cards.</p>
+<% else %>
+  <ul class="list-group">
+    <% @survey.cards.each do |card| %>
+      <li class="list-group-item">
+        <%= card.title %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
