@@ -55,4 +55,6 @@ group :production do
   gem 'unicorn'
   gem 'pg'
   gem 'rails_12factor'
+  gem 'twitter-bootstrap-rails-cdn'
+
 end
