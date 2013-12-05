@@ -20,7 +20,8 @@ test:
 
 production:
   adapter: postgresql
-  database: d5oi3shiqghi2u
-  password: QPcSiUOYF5xXSqmYmVfvVzg2LM
+  database: db68umtm8ev03e
+  user: gvukhrpmcintqd
+  password: 2SqUA4c2XMVvx7SNLs2_ZlSdQM
   pool: 5
   timeout: 5000
