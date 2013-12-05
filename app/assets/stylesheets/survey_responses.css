@@ -36,6 +36,11 @@
   background: #18bc9c;
 }
 
+.card-drop-area-description {
+  color: #18bc9c;
+  
+}
+
 .inactive {
   background: #fff;
   color: #18bc9c;

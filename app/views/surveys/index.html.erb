@@ -13,10 +13,10 @@
                         <span class="text-muted"><%= survey.description %></span>
                     </div>
                     <div class="col-md-3">
-                        <%= link_to 'New', survey_survey_runs_path(survey), method: :post %> |
-                        <%= link_to 'Show', survey %> |
-                        <%= link_to 'Edit', edit_survey_path(survey) %> |
-                        <%= link_to 'Delete', survey, method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-file'), survey_survey_runs_path(survey), method: :post %> &nbsp;&nbsp;
+                        <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-cog'), survey %> &nbsp;&nbsp;
+                        <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-edit'), edit_survey_path(survey) %> &nbsp;&nbsp;
+                        <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-trash'), survey, method: :delete, data: { confirm: 'Are you sure?' } %>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                             link_to 'Activate', survey_survey_run_path(run.survey,run, active: true), method: :patch end %>
                     </td>
                     <td>
-                        <%= if(!run.active?) then link_to 'Remove', survey_survey_run_path(run.survey, run), method: :delete, confirm: 'Are you sure?' end %>
+                        <%= if(!run.active?) then link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-trash'), survey_survey_run_path(run.survey, run), method: :delete, confirm: 'Are you sure?' end %>
                     </td>
                 </tr>
             <% end %>

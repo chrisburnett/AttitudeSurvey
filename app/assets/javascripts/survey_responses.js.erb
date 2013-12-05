@@ -5,6 +5,7 @@ window.surveyResponseId = 0;
 ready = function() {
     /* hide the recipients bits to begin with */
     $("#recipients-control-area").hide();
+    $("#help-area-2").hide();
     $("#next-button").hide();
     /* hide all the tick icons for now */
     $("span").hide();
@@ -14,6 +15,12 @@ ready = function() {
         accept: '.card',
         hoverClass: 'hover',
         tolerance: 'intersect',
+        over: function ( event, ui ) {
+            $(this).find($(".card-drop-area-description")).fadeTo(300,0);
+        },
+        out: function ( event, ui ) {
+            $(this).find($(".card-drop-area-description")).fadeTo(300,1);
+        },
         drop: function ( event, ui ) {
             var cardId = ui.draggable.attr( 'id' ).split("-")[1];
             var categoryId = $(this).attr('id').split("-")[1];
@@ -21,6 +28,8 @@ ready = function() {
             /* find the matching hidden field and set it to the category */
             /* we do this by selecting the input field group and looking for the value */
             $('input[id^="survey_response_card_placement"][value="' + cardId + '"]').next('input').val(categoryId);
+            $(this).find($(".card-drop-area-description")).fadeTo(300,1);
+
         }
     });
     $(".movable").draggable({
@@ -38,7 +47,9 @@ ready = function() {
     /* move to recipient phase when first submit clicked */
     var currentRecipientIndex = 0;
     $("#submit-button").click(function() {
+        /* show the next bits of the interface */
         $(this).replaceWith(function() { $("#next-button").show() });
+        $("#help-area").replaceWith(function() { $("#help-area-2").show() });
         $("#categories-control-area").replaceWith(function() {
             $("#recipients-control-area").show();
         });
