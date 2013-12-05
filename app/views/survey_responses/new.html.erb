@@ -15,23 +15,25 @@
     <%
     cat_count = @survey.sensitivity_categories.count
     # integer division gives us the number of rows
-    row_count = (cat_count/3)
+    row_count = (cat_count/2)
     if cat_count%3 > 0
         then row_count = row_count + 1
     end
-    col_count = 3 # hardcoding this - want 3 columns
+    col_count = 2 # hardcoding this - want 3 columns
     categories = @survey.sensitivity_categories.to_a.dup
     %>
 
     <div class="container-fixed card-drop-area-container">
         <% row_count.times do %>
             <div class="row">
-                <% col_count.times do %>
-                    <% category = categories.shift %>
-                    <div class="col-xs-4 card-drop-area" id="category-<%= category[:id] %>">
-                        <h1 class="card-drop-area-description"><%= category[:title] %></h1>
-                        <p class="card-drop-area-description"><%= category[:description] %></p>
-                    </div>
+                <% col_count.times do |i| %>
+                    <% unless categories.empty? %>
+                        <% category = categories.shift %>
+                        <div class="col-xs-4 card-drop-area" id="category-<%= category[:id] %>">
+                            <h1 class="card-drop-area-description"><%= category[:title] %></h1>
+                            <p class="card-drop-area-description"><%= category[:description] %></p>
+                        </div>
+                    <% end %>
                 <% end %>
             </div>
         <% end %>
