@@ -50,11 +50,12 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem 'twitter-bootstrap-rails-cdn'
+
 
 group :production do
   gem 'unicorn'
   gem 'pg'
   gem 'rails_12factor'
-  gem 'twitter-bootstrap-rails-cdn'
 
 end
