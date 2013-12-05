@@ -20,3 +20,4 @@
 
 # ignore rsync deploy script
 deploy.sh
+.env

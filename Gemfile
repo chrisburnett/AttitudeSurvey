@@ -52,7 +52,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :production do
-  gem 'thin'
+  gem 'unicorn'
   gem 'pg'
   gem 'rails_12factor'
 end
