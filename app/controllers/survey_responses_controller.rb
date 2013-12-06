@@ -12,7 +12,7 @@ class SurveyResponsesController < ApplicationController
       #end
     end
     # send the recipient cards to javascript so we can page through them without refreshing
-    gon.recipients = Recipient.all
+    gon.recipients = @survey.recipients
     #session[:current_phase] = SurveyResponse.phases.first
     # this monster JS page is doing everthing - not going to be coming back to controller
     # often (outside AJAX)
@@ -38,6 +38,7 @@ class SurveyResponsesController < ApplicationController
     @survey_response = SurveyResponse.find(params[:id])
     @survey_response.update(survey_response_params)
 
+    # if finished param set, go to final page
     respond_to do |format|
       format.json { render json: @survey_response, include: [:card_placements, :sharing_prefs] }
     end

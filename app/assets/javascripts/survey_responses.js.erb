@@ -56,7 +56,7 @@ ready = function() {
         /* clear states of card buttons and set toggle handler*/
         resetIcons();
 
-        $("#recipient-name-header").html("<h1>" + gon.recipients[currentRecipientIndex++].role + "</h1>");
+        $("#recipient-name-header").html("<h1>" + gon.recipients[currentRecipientIndex].role + "</h1>");
         /* change card state when clicked */
         $(".card").click(function() {
             $(this).toggleClass("inactive");
@@ -80,7 +80,6 @@ ready = function() {
     /* watch the state of these */
     $("#next-button").click(function() {
         var sharingPrefs = [];
-        showNextRecipient();
         var recipientId = gon.recipients[currentRecipientIndex].id;
         var surveyResponseId = 0;
         /* create JSON from states of cards */
@@ -109,10 +108,13 @@ ready = function() {
         resetIcons();
 
         /* if we are out of recipients, hide this button and show the final submit to get off this page (phew) */
-        currentRecipientIndex++;
-        if(currentRecipientIndex > gon.recipients.length) {
-            $(this).hide();
-            $("#submit-button").show();
+        console.log(currentRecipientIndex);
+        if(currentRecipientIndex == gon.recipients.length - 1) {
+            /* redirect to the debrief */
+            window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);
+        } else {
+            currentRecipientIndex++;
+            showNextRecipient();
         }
     });
 
