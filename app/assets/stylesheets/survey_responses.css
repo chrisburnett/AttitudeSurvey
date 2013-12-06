@@ -8,10 +8,13 @@
   color: #18bc9c;
   border-width: 2px;
   border-radius: 5px;
-  display: table-cell;
+  /*display: table-cell;*/
   vertical-align: middle;
   text-align: center;
   z-index: -1;
+  width: 47%;
+  margin: 0 3% 20px 0;
+  padding-bottom: 20%;
 }
 
 .hover {
@@ -28,12 +31,12 @@
   border-width: 1px;
   position: absolute;
   padding: 10px;
-  height: 50px;
+  height: 70px;
   width: 150px;
   text-align: center;
   color: #fff;
-  border-color: #149c82;
-  background: #18bc9c;
+  border-color: #1e2a36;
+  background: #2c3e50;
 }
 
 .card-drop-area-description {
@@ -43,7 +46,8 @@
 
 .inactive {
   background: #fff;
-  color: #18bc9c;
+  color: #2c3e50;
+  
 }
 
 .card-spaced {
@@ -69,25 +73,25 @@
   
 }
 
-/* Two Column */
+/* Two Column 
 
-@media screen and (min-width:500px) {
+@media screen and (min-width:800px) {
   .card-drop-area {
     width: 47%;
     margin: 0 3% 20px 0;
     padding-bottom: 39%;
   }
-}
+}*/
 
 /* Three Column */
-
+/*
 @media screen and (min-width:800px) {
   .card-drop-area {
     width: 31%;
     margin: 0 2% 20px 0;
     padding-bottom: 24%;
   }
-}
+}*/
 
 /* Four Column 
 
