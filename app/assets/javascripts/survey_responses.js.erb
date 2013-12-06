@@ -42,12 +42,10 @@ ready = function() {
             ui.draggable.draggable( 'option', 'revert', false );
             /* find the matching hidden field and set it to the category */
             /* we do this by selecting the input field group and looking for the value */
-            $('input[id^="survey_response_card_placement"][value="' + cardId + '"]').next('input').val(categoryId);
+            $('input[id^="survey_response_card_placement"][id$="card_id"][value="' + cardId + '"]').next('input').val(categoryId);
             $(this).find($(".card-drop-area-description")).fadeTo(300,1);
             dropCheck[ui.draggable.attr( 'id' )] = true;
-
             updateCategorySubmit();
-
         }
     });
     $(".movable").draggable({
