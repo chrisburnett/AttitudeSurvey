@@ -78,5 +78,7 @@
     <p><button type="button" class="btn btn-primary" id="next-button">Next</button></p>
     <!-- Show this using JS to indicate moving to the next whole-page step -->
 
-    <p><%= s.submit "Next", class: "btn btn-primary", id: "submit-button" %></p>
-<% end %>
+    <div id="submit-button-div">
+        <%= s.submit "Next", class: "btn btn-primary", id: "submit-button" %>
+    </div>
+    <% end %>

@@ -3,12 +3,20 @@
 window.surveyResponseId = 0;
 
 ready = function() {
-    /* hide the recipients bits to begin with */
+    /* initial screen setup */
     $("#recipients-control-area").hide();
     $("#help-area-2").hide();
     $("#next-button").hide();
+    $("#submit-button").prop("disabled", true);
+
     /* hide all the tick icons for now */
     $("span").hide();
+
+    /* hash to track the assignment of cards - don't allow user to proceed until all cards */
+    /* have been assigned */
+    var dropCheck = {};
+    $(".card").each(function() { dropCheck[this.id] = false });
+    console.log(dropCheck);
 
     /* dragging/dropping functionality */
     $(".card-drop-area").droppable({
@@ -17,9 +25,15 @@ ready = function() {
         tolerance: 'intersect',
         over: function ( event, ui ) {
             $(this).find($(".card-drop-area-description")).fadeTo(300,0);
+            dropCheck[ui.draggable.attr( 'id' )] = true;
+            console.log(dropCheck);
+            updateCategorySubmit();
         },
         out: function ( event, ui ) {
             $(this).find($(".card-drop-area-description")).fadeTo(300,1);
+            dropCheck[ui.draggable.attr( 'id' )] = false;
+            console.log(dropCheck);
+            updateCategorySubmit();
         },
         drop: function ( event, ui ) {
             var cardId = ui.draggable.attr( 'id' ).split("-")[1];
@@ -96,7 +110,7 @@ ready = function() {
 
         /* send data to controller */
         var responseJSON = {"survey_response":{"sharing_prefs_attributes":sharingPrefs}};
-        console.log(window.surveyResponseId);
+
         $.ajax({
             url: "<%= survey_responses_path %>/" + window.surveyResponseId,
             type: "PATCH",
@@ -108,7 +122,7 @@ ready = function() {
         resetIcons();
 
         /* if we are out of recipients, hide this button and show the final submit to get off this page (phew) */
-        console.log(currentRecipientIndex);
+
         if(currentRecipientIndex == gon.recipients.length - 1) {
             /* redirect to the debrief */
             window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);
@@ -130,6 +144,16 @@ ready = function() {
         header.fadeToggle(function() {
             header.html("<h1>" + gon.recipients[currentRecipientIndex].role + "</h1>");
             header.fadeToggle();
+        });
+    }
+
+    function updateCategorySubmit() {
+        $("#submit-button").prop("disabled", false);
+        $("#submit-button").toggleClass
+        $(".card").each(function() {
+            if(dropCheck[$(this).attr( 'id' )] == false) {
+                $("#submit-button").prop("disabled", true);
+            }
         });
     }
 
