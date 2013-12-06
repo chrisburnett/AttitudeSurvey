@@ -49,8 +49,8 @@ class SurveyResponsesController < ApplicationController
     @survey_response = SurveyResponse.find(params[:id])
 
     respond_to do |format|
-      format_html
-      format_json { render json: @survey_response, include: [:card_placements, :sharing_prefs] }
+      format.html
+      format.json { render json: @survey_response, include: [:card_placements, :sharing_prefs] }
     end
   end
 
