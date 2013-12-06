@@ -2,6 +2,8 @@ class SurveysController < ApplicationController
   before_action :set_survey, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate
 
+  protect_from_forgery except: :create
+
   # GET /surveys
   # GET /surveys.json
   def index
@@ -12,6 +14,11 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
+    @survey = Survey.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @survey.to_json(include: [:cards, :recipients, :sensitivity_categories]) }
+    end
   end
 
   # GET /surveys/new
