@@ -9,7 +9,8 @@ ready = function() {
     $("#next-button").hide();
     $("#submit-button").prop("disabled", true);
 
-    /* hide all the tick icons for now */
+    /* hide all the tick
+ icons for now */
     $("span").hide();
 
     /* hash to track the assignment of cards - don't allow user to proceed until all cards */
@@ -43,6 +44,8 @@ ready = function() {
             /* we do this by selecting the input field group and looking for the value */
             $('input[id^="survey_response_card_placement"][value="' + cardId + '"]').next('input').val(categoryId);
             $(this).find($(".card-drop-area-description")).fadeTo(300,1);
+            dropCheck[ui.draggable.attr( 'id' )] = true;
+
             updateCategorySubmit();
 
         }
