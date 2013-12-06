@@ -43,6 +43,7 @@ ready = function() {
             /* we do this by selecting the input field group and looking for the value */
             $('input[id^="survey_response_card_placement"][value="' + cardId + '"]').next('input').val(categoryId);
             $(this).find($(".card-drop-area-description")).fadeTo(300,1);
+            updateCategorySubmit();
 
         }
     });
@@ -149,7 +150,6 @@ ready = function() {
 
     function updateCategorySubmit() {
         $("#submit-button").prop("disabled", false);
-        $("#submit-button").toggleClass
         $(".card").each(function() {
             if(dropCheck[$(this).attr( 'id' )] == false) {
                 $("#submit-button").prop("disabled", true);
