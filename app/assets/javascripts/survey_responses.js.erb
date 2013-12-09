@@ -1,6 +1,7 @@
 <% environment.context_class.instance_eval { include Rails.application.routes.url_helpers } %>
 
 window.surveyResponseId = 0;
+window.progress = 10;
 
 ready = function() {
     /* initial screen setup */
@@ -16,8 +17,20 @@ ready = function() {
     /* hash to track the assignment of cards - don't allow user to proceed until all cards */
     /* have been assigned */
     var dropCheck = {};
-    $(".card").each(function() { dropCheck[this.id] = false });
-    console.log(dropCheck);
+    /* hash to maintain where cards have been dropped */
+    var cardsToCats = {};
+    $(".card").each(function() {
+        dropCheck[this.id] = false;
+        /* assign descriptions to cards */
+        $(this).popover({
+            trigger: "hover",
+            title: "Description",
+            content: $(this).data("description")
+        });
+    });
+
+
+
 
     /* dragging/dropping functionality */
     $(".card-drop-area").droppable({
@@ -27,13 +40,11 @@ ready = function() {
         over: function ( event, ui ) {
             $(this).find($(".card-drop-area-description")).fadeTo(300,0);
             dropCheck[ui.draggable.attr( 'id' )] = true;
-            console.log(dropCheck);
             updateCategorySubmit();
         },
         out: function ( event, ui ) {
             $(this).find($(".card-drop-area-description")).fadeTo(300,1);
             dropCheck[ui.draggable.attr( 'id' )] = false;
-            console.log(dropCheck);
             updateCategorySubmit();
         },
         drop: function ( event, ui ) {
@@ -45,13 +56,17 @@ ready = function() {
             $('input[id^="survey_response_card_placement"][id$="card_id"][value="' + cardId + '"]').next('input').val(categoryId);
             $(this).find($(".card-drop-area-description")).fadeTo(300,1);
             dropCheck[ui.draggable.attr( 'id' )] = true;
+            cardsToCats[ui.draggable.attr('id')] = this;
             updateCategorySubmit();
         }
     });
     $(".movable").draggable({
         stack: '.card',
         revert: true,
-        containment: '#central-container'
+        containment: '#central-container',
+        drag: function() {
+            $(this).popover('hide')
+        }
     });
 
 
@@ -59,6 +74,8 @@ ready = function() {
     /* AJAX calls */
     $("form").on("ajax:success", function(e, data, status, xhr) {
         window.surveyResponseId = JSON.parse(xhr.responseText).id;
+        window.progress++;
+        updateProgress();
     });
     /* move to recipient phase when first submit clicked */
     var currentRecipientIndex = 0;
@@ -72,7 +89,7 @@ ready = function() {
         /* clear states of card buttons and set toggle handler*/
         resetIcons();
 
-        $("#recipient-name-header").html("<h1>" + gon.recipients[currentRecipientIndex].role + "</h1>");
+        $("#recipient-name-header").html("<h2>" + gon.recipients[currentRecipientIndex].role + "</h2>");
         /* change card state when clicked */
         $(".card").click(function() {
             $(this).toggleClass("inactive");
@@ -87,6 +104,7 @@ ready = function() {
             }
         })
         $("form").submit();
+       lockCardsToCategories();
     });
 
 
@@ -147,6 +165,8 @@ ready = function() {
             header.html("<h1>" + gon.recipients[currentRecipientIndex].role + "</h1>");
             header.fadeToggle();
         });
+        window.progress++;
+        updateProgress();
     }
 
     function updateCategorySubmit() {
@@ -155,6 +175,22 @@ ready = function() {
             if(dropCheck[$(this).attr( 'id' )] == false) {
                 $("#submit-button").prop("disabled", true);
             }
+        });
+    }
+
+    function updateProgress() {
+        var currentWidth = $("#progressbar").css("width");
+        $("#progressbar").css("width", currentWidth + (1/gon.recipients.length));
+    }
+
+    function lockCardsToCategories() {
+        console.log(cardsToCats);
+        $(".movable").each(function(index, elem) {
+            $(elem).draggable({
+                stack: '.card',
+                revert: true,
+                containment: $(cardsToCats[elem.id])
+            });
         });
     }
 

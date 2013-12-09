@@ -2,7 +2,17 @@
  * Require the fluid squares css to get the cards to work.
  */
 
-.card-drop-area {
+.card-drop-area-outer {
+  width: 47%;
+  margin: 0 3% 20px 0;
+  padding-bottom: 40%;
+  min-height: 100%;
+}
+
+.card-drop-area{
+  position:absolute;
+  width:100%;
+  height:100%;
   border-style: dashed;
   border-color: #18bc9c;
   color: #18bc9c;
@@ -12,9 +22,7 @@
   vertical-align: middle;
   text-align: center;
   z-index: -1;
-  width: 47%;
-  margin: 0 3% 20px 0;
-  padding-bottom: 20%;
+  
 }
 
 .hover {
@@ -68,7 +76,7 @@
   border-width: 2px;
   position: absolute;
   z-order: -1;
-  height: 50px;
+  height: 70px;
   width: 150px;
   
 }
@@ -76,22 +84,22 @@
 /* Two Column 
 
 @media screen and (min-width:800px) {
-  .card-drop-area {
-    width: 47%;
-    margin: 0 3% 20px 0;
-    padding-bottom: 39%;
-  }
+.card-drop-area {
+width: 47%;
+margin: 0 3% 20px 0;
+padding-bottom: 39%;
+}
 }*/
 
 /* Three Column */
 /*
-@media screen and (min-width:800px) {
+  @media screen and (min-width:800px) {
   .card-drop-area {
-    width: 31%;
-    margin: 0 2% 20px 0;
-    padding-bottom: 24%;
+  width: 31%;
+  margin: 0 2% 20px 0;
+  padding-bottom: 24%;
   }
-}*/
+  }*/
 
 /* Four Column 
 
