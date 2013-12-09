@@ -19,7 +19,7 @@
     if cat_count%3 > 0
         then row_count = row_count + 1
     end
-    col_count = 2 # hardcoding this - want 3 columns
+    col_count = 3 # hardcoding this - want 3 columns
     categories = @survey.sensitivity_categories.to_a.dup
     %>
 
@@ -29,7 +29,7 @@
                 <% col_count.times do |i| %>
                     <% unless categories.empty? %>
                         <% category = categories.shift %>
-                        <div class="col-xs-6 card-drop-area-outer">
+                        <div class="col-xs-4 card-drop-area-outer">
                           <div class="card-drop-area" id="category-<%= category[:id] %>">
                             <h1 class="card-drop-area-description"><%= category[:title] %></h1>
                             <p class="card-drop-area-description"><%= category[:description] %></p>
@@ -46,7 +46,7 @@
     <div class="container">
         <div class="row">
             <div id="categories-control-area" class="col-md-8" id="card-info">
-                <p>Some text about the card goes here which gives some information like in the paper.</p>
+                <p>Please drag each card from the deck onto an area to reflect its sensitivity.</p>
             </div>
             <div class="col-xs-4 pull-right">
                 <div id="card-deck" class="btn-group"></div>
@@ -63,10 +63,10 @@
 
     <div id="recipients-control-area" class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <p>Please click on the items that you would be happy with sharing with:</p>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <div id="recipient-name-header"></div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <% environment.context_class.instance_eval { include Rails.application.routes.url_helpers } %>
 
 window.surveyResponseId = 0;
-window.progress = 10;
+window.progress = 0;
 
 ready = function() {
     /* initial screen setup */
@@ -141,9 +141,12 @@ ready = function() {
         /* reset buttons */
         resetIcons();
 
-        /* if we are out of recipients, hide this button and show the final submit to get off this page (phew) */
-
+        /* on the final button, show "finish" instead of next */
+        if(currentRecipientIndex == gon.recipients.length - 2) {
+            $(this).text("Finish")
+        }
         if(currentRecipientIndex == gon.recipients.length - 1) {
+            /* if we are out of recipients, hide this button and show the final submit to get off this page */
             /* redirect to the debrief */
             window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);
         } else {
@@ -180,7 +183,7 @@ ready = function() {
 
     function updateProgress() {
         var currentWidth = $("#progressbar").css("width");
-        $("#progressbar").css("width", currentWidth + (1/gon.recipients.length));
+        $("#progressbar").css("width", (window.progress/gon.recipients.length)*100 + "%");
     }
 
     function lockCardsToCategories() {
