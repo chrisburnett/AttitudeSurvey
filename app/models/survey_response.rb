@@ -10,6 +10,9 @@ class SurveyResponse < ActiveRecord::Base
   has_many :card_placements
   has_many :sharing_prefs
 
+  # 'hard coded' for now, so no corresponding template questionnaire model. Could be added layer
+  has_one :questionnaire_response
+
   accepts_nested_attributes_for :card_placements
   accepts_nested_attributes_for :sharing_prefs
 

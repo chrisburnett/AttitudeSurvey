@@ -6,16 +6,11 @@ class SurveyResponsesController < ApplicationController
     # add the card placements
     @survey.cards.each do |card|
       @survey_response.card_placements.build(card_id: card.id)
-      # add the survey response placeholders (dot product - nasty!)
-      #@survey.recipients.each do |recipient|
-       # @survey_response.sharing_prefs.build(card_id: card.id, recipient_id: recipient.id, share: false)
-      #end
     end
+    # create questionnaire response
+    @questionnaire_response = @survey_response.build_questionnaire_response
     # send the recipient cards to javascript so we can page through them without refreshing
     gon.recipients = @survey.recipients
-    #session[:current_phase] = SurveyResponse.phases.first
-    # this monster JS page is doing everthing - not going to be coming back to controller
-    # often (outside AJAX)
   end
 
   def create

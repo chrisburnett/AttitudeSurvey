@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  survey_response_id: 
+  participation: false
+  gender: MyString
+  employment_status: MyString
+  age_range: MyString
+  open_feedback: MyText
+  app_user: false
+
+two:
+  survey_response_id: 
+  participation: false
+  gender: MyString
+  employment_status: MyString
+  age_range: MyString
+  open_feedback: MyText
+  app_user: false

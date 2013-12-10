@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202150550) do
+ActiveRecord::Schema.define(version: 20131210111235) do
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -61,6 +61,20 @@ ActiveRecord::Schema.define(version: 20131202150550) do
   end
 
   add_index "multi_choice_questions", ["question_id"], name: "index_multi_choice_questions_on_question_id"
+
+  create_table "questionnaire_responses", force: true do |t|
+    t.integer  "survey_response_id"
+    t.boolean  "participation"
+    t.string   "gender"
+    t.string   "employment_status"
+    t.string   "age_range"
+    t.text     "open_feedback"
+    t.boolean  "app_user"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "questionnaire_responses", ["survey_response_id"], name: "index_questionnaire_responses_on_survey_response_id"
 
   create_table "questions", force: true do |t|
     t.string   "question"

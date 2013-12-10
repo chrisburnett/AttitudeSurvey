@@ -1,0 +1,46 @@
+<%= f.label :participation, "By clicking here, you indicate that you do not wish to complete this section." %>
+  <%= f.check_box :participation %>
+
+  <%= f.label :gender, "Please indicate your gender:" %>
+  <div class="radio">
+    <%= f.radio_button(:gender, "male") %>
+    <%= f.label(:gender_male, "Male") %>
+  </div>
+  <div class="radio">
+    <%= f.radio_button(:gender, "female") %>
+    <%= f.label(:gender_female, "Female") %>
+  </div>
+
+  <%= f.label :age_range, "Please select a range which describes your age:" %>
+  <div class="radio">
+    <%= f.radio_button(:age_range, "18-30") %>
+    <%= f.label(:age_range_a, "18-30") %>
+  </div>
+  <div class="radio">
+    <%= f.radio_button(:age_range, "31-50") %>
+    <%= f.label(:age_range_b, "31-50") %>
+  </div>
+  <div class="radio">
+    <%= f.radio_button(:age_range, "51-70") %>
+    <%= f.label(:age_range_c, "51-70") %>
+  </div>
+  <div class="radio">
+    <%= f.radio_button(:age_range, "71+") %>
+    <%= f.label(:age_range_d, "71+") %>
+  </div>
+
+  <%= f.label :employment_status, "What is your employment status:" %>
+  <div class="radio"><%= f.radio_button(:employment_status, "retired") %>
+    <%= f.label(:employment_status_a, "Retired") %></div>
+  <div class="radio"><%= f.radio_button(:employment_status, "unemployed") %>
+    <%= f.label(:employment_status_b, "Unemployed") %></div>
+  <div class="radio"><%= f.radio_button(:employment_status, "student") %>
+    <%= f.label(:employment_status_c, "Student") %></div>
+  <div class="radio"><%= f.radio_button(:employment_status, "full-time childcare") %>
+    <%= f.label(:employment_status_d, "Full-time childcare") %></div>
+  <div class="radio"><%= f.radio_button(:employment_status, "full-time employment") %>
+    <%= f.label(:employment_status_e, "Full-time employment") %></div>
+  <div class="radio"><%= f.radio_button(:employment_status, "part-time employment") %>
+    <%= f.label(:employment_status_f, "Part-time employment") %></div>
+  <div class="radio"><%= f.radio_button(:employment_status, "other") %>
+    <%= f.label(:employment_status_g, "Other") %></div>

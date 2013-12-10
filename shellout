@@ -1,14 +1,23 @@
-
-
-Started POST "/survey_responses" for 10.8.0.14 at 2013-12-04 06:33:19 +0000
-Processing by SurveyResponsesController#create as JS
-  Parameters: {"utf8"=>"✓", "survey_response"=>{"card_placements_attributes"=>{"0"=>{"card_id"=>"68", "sensitivity_category_id"=>"32"}, "1"=>{"card_id"=>"69", "sensitivity_category_id"=>"40"}}}}
-  SurveyRun Load (0.1ms)  SELECT "survey_runs".* FROM "survey_runs" WHERE "survey_runs"."active" = 't' LIMIT 1
-   (0.0ms)  begin transaction
-  SQL (0.4ms)  INSERT INTO "survey_responses" ("created_at", "survey_run_id", "updated_at") VALUES (?, ?, ?)  [["created_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00], ["survey_run_id", 15], ["updated_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00]]
-  SurveyRun Load (0.1ms)  SELECT "survey_runs".* FROM "survey_runs" WHERE "survey_runs"."id" = ? ORDER BY "survey_runs"."id" ASC LIMIT 1  [["id", 15]]
-  SQL (29.5ms)  UPDATE "survey_runs" SET "count_of_survey_responses" = COALESCE("count_of_survey_responses", 0) + 1 WHERE "survey_runs"."id" = 15
-  SQL (0.4ms)  INSERT INTO "card_placements" ("card_id", "created_at", "sensitivity_category_id", "survey_response_id", "updated_at") VALUES (?, ?, ?, ?, ?)  [["card_id", 68], ["created_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00], ["sensitivity_category_id", 32], ["survey_response_id", 189], ["updated_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00]]
-  SQL (0.2ms)  INSERT INTO "card_placements" ("card_id", "created_at", "sensitivity_category_id", "survey_response_id", "updated_at") VALUES (?, ?, ?, ?, ?)  [["card_id", 69], ["created_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00], ["sensitivity_category_id", 40], ["survey_response_id", 189], ["updated_at", Wed, 04 Dec 2013 06:33:19 UTC +00:00]]
-   (2.7ms)  commit transaction
-Completed 200 OK in 44ms (Views: 0.4ms | ActiveRecord: 33.4ms)
+bash-3.2$ pwd
+/
+bash-3.2$ cd ~/Dropbox/Work/trump/AttitudeSurvey
+bash-3.2$ ls
+Gemfile		Rakefile	config.ru	lib		survey.json
+Gemfile.lock	app		db		log		test
+Procfile	bin		erd.pdf		public		tmp
+README.rdoc	config		heroku.out	shellout	vendor
+bash-3.2$ rails g model QuestionnaireResponse survey_response:references participation:boolean gender:string employment_status:string age_range:string open_feedback:text app_user:boolean
+      invoke  active_record
+      create    db/migrate/20131210111235_create_questionnaire_responses.rb
+      create    app/models/questionnaire_response.rb
+      invoke    test_unit
+      create      test/models/questionnaire_response_test.rb
+      create      test/fixtures/questionnaire_responses.yml
+bash-3.2$ rails server 
+=> Booting WEBrick
+=> Rails 4.0.1 application starting in development on http://0.0.0.0:3000
+=> Run `rails server -h` for more startup options
+=> Ctrl-C to shutdown server
+A server is already running. Check /Users/chrisburnett/Dropbox/Work/trump/AttitudeSurvey/tmp/pids/server.pid.
+Exiting
+bash-3.2$ 
