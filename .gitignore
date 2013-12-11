@@ -17,6 +17,7 @@
 
 # Ignore server output files
 *.out
+*shellout*
 
 # ignore rsync deploy script
 deploy.sh

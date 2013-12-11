@@ -42,6 +42,8 @@ class SurveyResponsesController < ApplicationController
 
   def show
     @survey_response = SurveyResponse.find(params[:id])
+    @questionnaire_response = @survey_response.questionnaire_response
+    puts @questionnaire_response
 
     respond_to do |format|
       format.html
