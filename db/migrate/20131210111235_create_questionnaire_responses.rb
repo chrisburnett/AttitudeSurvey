@@ -8,7 +8,6 @@ class CreateQuestionnaireResponses < ActiveRecord::Migration
       t.string :age_range
       t.text :open_feedback
       t.boolean :app_user
-
       t.timestamps
     end
   end
