@@ -223,7 +223,7 @@ ready = function() {
             window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);
         });
         $(".card").hide();
-        $("#lower-hr").hide();
+        $("hr").hide();
         $("#recipients-control-area").hide();
         $("#help-area-2").replaceWith(function() {
             $("#help-area-3").show();

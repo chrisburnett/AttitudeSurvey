@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210111235) do
+ActiveRecord::Schema.define(version: 20131211121930) do
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 20131210111235) do
 
   create_table "questionnaire_responses", force: true do |t|
     t.integer  "survey_response_id"
-    t.boolean  "participation"
     t.string   "gender"
     t.string   "employment_status"
     t.string   "age_range"
@@ -72,6 +71,8 @@ ActiveRecord::Schema.define(version: 20131210111235) do
     t.boolean  "app_user"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "worked_in_healthcare"
+    t.string   "worked_in_healthcare_occupation"
   end
 
   add_index "questionnaire_responses", ["survey_response_id"], name: "index_questionnaire_responses_on_survey_response_id"
