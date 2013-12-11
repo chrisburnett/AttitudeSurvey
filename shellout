@@ -2,22 +2,13 @@ bash-3.2$ pwd
 /
 bash-3.2$ cd ~/Dropbox/Work/trump/AttitudeSurvey
 bash-3.2$ ls
-Gemfile		Rakefile	config.ru	lib		survey.json
-Gemfile.lock	app		db		log		test
-Procfile	bin		erd.pdf		public		tmp
-README.rdoc	config		heroku.out	shellout	vendor
-bash-3.2$ rails g model QuestionnaireResponse survey_response:references participation:boolean gender:string employment_status:string age_range:string open_feedback:text app_user:boolean
-      invoke  active_record
-      create    db/migrate/20131210111235_create_questionnaire_responses.rb
-      create    app/models/questionnaire_response.rb
-      invoke    test_unit
-      create      test/models/questionnaire_response_test.rb
-      create      test/fixtures/questionnaire_responses.yml
-bash-3.2$ rails server 
+Gemfile		Procfile	Rakefile	bin		config.ru	erd.pdf		lib		public		survey.json	tmp
+Gemfile.lock	README.rdoc	app		config		db		heroku.out	log		shellout	test		vendor
+bash-3.2$ rails server
 => Booting WEBrick
 => Rails 4.0.1 application starting in development on http://0.0.0.0:3000
 => Run `rails server -h` for more startup options
 => Ctrl-C to shutdown server
-A server is already running. Check /Users/chrisburnett/Dropbox/Work/trump/AttitudeSurvey/tmp/pids/server.pid.
-Exiting
-bash-3.2$ 
+[2013-12-11 10:29:57] INFO  WEBrick 1.3.1
+[2013-12-11 10:29:57] INFO  ruby 2.0.0 (2013-06-27) [x86_64-darwin12.4.0]
+[2013-12-11 10:29:57] INFO  WEBrick::HTTPServer#start: pid=14303 port=3000

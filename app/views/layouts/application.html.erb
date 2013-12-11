@@ -21,7 +21,7 @@
                             <% if SurveyRun.exists?(active: true) %>
                             <li><%= link_to 'New response', new_survey_response_path %>
                             <% end %>
-                            <li><a href="#">Help</a></li></ul>
+                            <li><a href="#" id="help-link">Help</a></li></ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><%= link_to 'Admin', surveys_path %></li>
                         </ul>

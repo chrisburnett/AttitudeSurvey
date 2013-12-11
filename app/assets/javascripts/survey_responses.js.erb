@@ -6,12 +6,15 @@ window.progress = 0;
 ready = function() {
     /* initial screen setup */
     $("#recipients-control-area").hide();
+    $("#questionnaire-phase").hide();
     $("#help-area-2").hide();
+    $("#help-area-3").hide();
     $("#next-button").hide();
+    $("#finish-button").hide();
     $("#submit-button").prop("disabled", true);
 
     /* hide all the tick
- icons for now */
+       icons for now */
     $("span").hide();
 
     /* hash to track the assignment of cards - don't allow user to proceed until all cards */
@@ -27,6 +30,13 @@ ready = function() {
             title: "Description",
             content: $(this).data("description")
         });
+    });
+
+    /* display the first modal help instructions */
+    $("#help-modal-cards").modal();
+    $("#help-link").click(function( event ) {
+        event.preventDefault();
+        $("#help-modal-cards").modal('show');
     });
 
 
@@ -80,6 +90,7 @@ ready = function() {
     /* move to recipient phase when first submit clicked */
     var currentRecipientIndex = 0;
    $("#submit-button").click(function() {
+       $("#card-deck").hide();
         /* show the next bits of the interface */
         $(this).replaceWith(function() { $("#next-button").show() });
         $("#help-area").replaceWith(function() { $("#help-area-2").show() });
@@ -89,7 +100,7 @@ ready = function() {
         /* clear states of card buttons and set toggle handler*/
         resetIcons();
 
-        $("#recipient-name-header").html("<h2>" + gon.recipients[currentRecipientIndex].role + "</h2>");
+        $("#recipient-name-header").html(gon.recipients[currentRecipientIndex].role);
         /* change card state when clicked */
         $(".card").click(function() {
             $(this).toggleClass("inactive");
@@ -105,6 +116,12 @@ ready = function() {
         })
         $("form").submit();
        lockCardsToCategories();
+       $("#help-link").off('click');
+       $("#help-modal-recipients").modal();
+       $("#help-link").click(function( event ) {
+           event.preventDefault();
+           $("#help-modal-recipients").modal('show');
+       });
     });
 
 
@@ -141,14 +158,13 @@ ready = function() {
         /* reset buttons */
         resetIcons();
 
-        /* on the final button, show "finish" instead of next */
-        if(currentRecipientIndex == gon.recipients.length - 2) {
-            $(this).text("Finish")
-        }
         if(currentRecipientIndex == gon.recipients.length - 1) {
             /* if we are out of recipients, hide this button and show the final submit to get off this page */
             /* redirect to the debrief */
-            window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);
+            /*window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);*/
+            window.progress++;
+            updateProgress();
+            questionnairePhase();
         } else {
             currentRecipientIndex++;
             showNextRecipient();
@@ -165,7 +181,7 @@ ready = function() {
     function showNextRecipient() {
         var header = $("#recipient-name-header");
         header.fadeToggle(function() {
-            header.html("<h1>" + gon.recipients[currentRecipientIndex].role + "</h1>");
+            header.html(gon.recipients[currentRecipientIndex].role);
             header.fadeToggle();
         });
         window.progress++;
@@ -183,7 +199,7 @@ ready = function() {
 
     function updateProgress() {
         var currentWidth = $("#progressbar").css("width");
-        $("#progressbar").css("width", (window.progress/gon.recipients.length)*100 + "%");
+        $("#progressbar").css("width", (window.progress/(gon.recipients.length+1))*100 + "%");
     }
 
     function lockCardsToCategories() {
@@ -197,6 +213,31 @@ ready = function() {
         });
     }
 
+    function questionnairePhase() {
+        $("#help-link").off('click');
+        $("#help-link").click(function( event ) {
+            event.preventDefault( event );
+            $("#help-modal-questionnaire").modal();
+        });
+        $("form").on("ajax:success", function(e, data, status, xhr) {
+            window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);
+        });
+        $(".card").hide();
+        $("#lower-hr").hide();
+        $("#recipients-control-area").hide();
+        $("#help-area-2").replaceWith(function() {
+            $("#help-area-3").show();
+        });
+        $("#main-phase").replaceWith(function() {
+            $("#questionnaire-phase").show()
+        });
+        $("#next-button").replaceWith(function() {
+            $("#finish-button").show();
+        })
+        $("#finish-button").click(function() {
+            $("form").submit();
+        });
+    }
 };
 
 $(document).ready(ready)

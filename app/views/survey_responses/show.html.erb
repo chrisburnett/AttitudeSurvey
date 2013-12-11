@@ -3,3 +3,5 @@
 <% @survey_response.card_placements.each do |placement| %>
     <p>Card <%= placement.card.title %> was placed on category <%= placement.sensitivity_category.title %></p>
 <% end %>
+
+Response: <%= @survey_response.questionnaire_response.gender %>

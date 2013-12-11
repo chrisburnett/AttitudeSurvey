@@ -26,12 +26,20 @@
   
 }
 
+.modal-dialog {
+  left: auto;
+  width: 700px;
+}
+
 .hover {
   border-style: solid;
   background: #effeff;
 
 }
 
+.recipient-name-display {
+  
+}
 
 .card {
   /*display: table-cell;*/

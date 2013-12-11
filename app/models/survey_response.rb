@@ -15,6 +15,7 @@ class SurveyResponse < ActiveRecord::Base
 
   accepts_nested_attributes_for :card_placements
   accepts_nested_attributes_for :sharing_prefs
+  accepts_nested_attributes_for :questionnaire_response
 
   def self.phases
     %w[categories]
