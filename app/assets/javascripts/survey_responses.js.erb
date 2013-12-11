@@ -9,6 +9,7 @@ ready = function() {
     $("#questionnaire-phase").hide();
     $("#help-area-2").hide();
     $("#help-area-3").hide();
+    $("#help-area-debrief").hide();
     $("#next-button").hide();
     $("#finish-button").hide();
     $("#submit-button").prop("disabled", true);
@@ -220,7 +221,8 @@ ready = function() {
             $("#help-modal-questionnaire").modal();
         });
         $("form").on("ajax:success", function(e, data, status, xhr) {
-            window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);
+            /*window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);*/
+            debriefPhase();
         });
         $(".card").hide();
         $("hr").hide();
@@ -238,6 +240,15 @@ ready = function() {
             $("form").submit();
         });
     }
+
+    function debriefPhase() {
+        $("#help-link").off('click');
+        $("#help-area-3").hide();
+        $("#progress-panel").hide();
+        $("form").hide();
+        $("#help-area-debrief").show();
+    }
+
 };
 
 $(document).ready(ready)

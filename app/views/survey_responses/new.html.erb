@@ -1,4 +1,4 @@
-nden<%= include_gon %>
+<%= include_gon %>
 
 <div class="modal fade" id="help-modal-cards" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -71,6 +71,13 @@ nden<%= include_gon %>
 <div id="help-area-3">
   <h2>Questionnaire</h2>
   <p>Finally, we would like to ask a few questions about you. <strong>This section is optional:</strong> if you would prefer not to answer these questions, you can click the <strong class="text-success">Finish</strong> button below to complete the survey.</p>
+</div>
+
+<div id="help-area-debrief">
+  <h2>Thank you for your participation!</h2>
+  <p>Thank you for taking part in this survey. This data will be used to inform the development of our mobile phone intervention.</p>
+  <p>You can read more about the study at the <a href="http://www.trump-india-uk.org">TRUMP project homepage</a>.</p>
+  <p>If you would like to be kept informed about results or publications resulting from this research, please contact <a href="mailto:cburnett@abdn.ac.uk">Dr. Chris Burnett</a> or <a href="mailto:m.jaffray@abdn.ac.uk">Dr. Mariesha Jaffray</a>.
 </div>
 
 <hr/>
@@ -156,7 +163,7 @@ nden<%= include_gon %>
   </div>
 <% end %>
 
-<div class="panel panel-default">
+<div id="progress-panel" class="panel panel-default">
   <div class="panel-heading">Progress</div>
   <div class="panel-body">
     <div class="progress progress-striped">
