@@ -5,73 +5,74 @@ window.progress = 0;
 
 ready = function() {
     /* initial screen setup */
-    $("#recipients-control-area").hide();
-    $("#questionnaire-phase").hide();
-    $("#help-area-2").hide();
-    $("#help-area-3").hide();
-    $("#help-area-debrief").hide();
-    $("#next-button").hide();
-    $("#finish-button").hide();
-    $("#submit-button").prop("disabled", true);
+    $('#recipients-control-area').hide();
+    $('#questionnaire-phase').hide();
+    $('#help-area-2').hide();
+    $('#help-area-3').hide();
+    $('#help-area-debrief').hide();
+    $('#next-button').hide();
+    $('#finish-button').hide();
+    $('#submit-button').prop('disabled', true);
 
     /* hide all the tick
        icons for now */
-    $("span").hide();
+    $('span').hide();
 
     /* hash to track the assignment of cards - don't allow user to proceed until all cards */
     /* have been assigned */
     var dropCheck = {};
     /* hash to maintain where cards have been dropped */
     var cardsToCats = {};
-    $(".card").each(function() {
+    $('.card').each(function() {
         dropCheck[this.id] = false;
         /* assign descriptions to cards */
         $(this).popover({
-            trigger: "hover",
-            title: "Description",
-            content: $(this).data("description")
+            trigger: 'hover',
+            title: 'Description',
+            content: $(this).data('description')
         });
     });
 
     /* display the first modal help instructions */
-    $("#help-modal-cards").modal();
-    $("#help-link").click(function( event ) {
+    $('#help-modal-cards').modal();
+    $('#help-link').click(function( event ) {
         event.preventDefault();
-        $("#help-modal-cards").modal('show');
+        $('#help-modal-cards').modal('show');
     });
 
 
 
 
     /* dragging/dropping functionality */
-    $(".card-drop-area").droppable({
+    $('.card-drop-area-outer').droppable({
         accept: '.card',
         hoverClass: 'hover',
         tolerance: 'intersect',
         over: function ( event, ui ) {
-            $(this).find($(".card-drop-area-description")).fadeTo(300,0);
+            $(this).find($('.card-drop-area-description')).fadeTo(300,0);
             dropCheck[ui.draggable.attr( 'id' )] = true;
             updateCategorySubmit();
         },
         out: function ( event, ui ) {
-            $(this).find($(".card-drop-area-description")).fadeTo(300,1);
+            $(this).find($('.card-drop-area-description')).fadeTo(300,1);
             dropCheck[ui.draggable.attr( 'id' )] = false;
             updateCategorySubmit();
         },
         drop: function ( event, ui ) {
-            var cardId = ui.draggable.attr( 'id' ).split("-")[1];
-            var categoryId = $(this).attr('id').split("-")[1];
+            var inner = $(this).find('.card-drop-area');
+            var cardId = ui.draggable.attr( 'id' ).split('-')[1];
+            var categoryId = inner.attr('id').split('-')[1];
             ui.draggable.draggable( 'option', 'revert', false );
             /* find the matching hidden field and set it to the category */
             /* we do this by selecting the input field group and looking for the value */
-            $('input[id^="survey_response_card_placement"][id$="card_id"][value="' + cardId + '"]').next('input').val(categoryId);
-            $(this).find($(".card-drop-area-description")).fadeTo(300,1);
+            $('input[id^="survey_response_card_placement"][id$="card_id"][value=' + cardId + ']').next('input').val(categoryId);
+            $(this).find('.card-drop-area-description').fadeTo(300,1);
             dropCheck[ui.draggable.attr( 'id' )] = true;
-            cardsToCats[ui.draggable.attr('id')] = this;
+            cardsToCats[ui.draggable.attr('id')] = inner;
             updateCategorySubmit();
         }
     });
-    $(".movable").draggable({
+    $('.movable').draggable({
         stack: '.card',
         revert: true,
         containment: '#central-container',
@@ -83,31 +84,41 @@ ready = function() {
 
     /* when the form is first submitted, get the response ID we can use for subsequent */
     /* AJAX calls */
-    $("form").on("ajax:success", function(e, data, status, xhr) {
+    $('form').on('ajax:success', function(e, data, status, xhr) {
         window.surveyResponseId = JSON.parse(xhr.responseText).id;
         window.progress++;
         updateProgress();
     });
     /* move to recipient phase when first submit clicked */
     var currentRecipientIndex = 0;
-   $("#submit-button").click(function() {
-       $("#card-deck").hide();
+   $('#submit-button').click(function() {
+       /* setup isotope for auto-relayout */
+       $(".card-drop-area-outer").isotope({
+           itemSelector: '.card',
+           layoutMode: 'fitRows',
+           transformsEnabled: false
+       })
+       $(".card").each(function() {
+           
+           reParentCard(this,cardsToCats[this.id]);
+       })
+       $('#card-deck').hide();
         /* show the next bits of the interface */
-        $(this).replaceWith(function() { $("#next-button").show() });
-        $("#help-area").replaceWith(function() { $("#help-area-2").show() });
-        $("#categories-control-area").replaceWith(function() {
-            $("#recipients-control-area").show();
+        $(this).replaceWith(function() { $('#next-button').show() });
+        $('#help-area').replaceWith(function() { $('#help-area-2').show() });
+        $('#categories-control-area').replaceWith(function() {
+            $('#recipients-control-area').show();
         });
         /* clear states of card buttons and set toggle handler*/
         resetIcons();
 
-        $("#recipient-name-header").html(gon.recipients[currentRecipientIndex].role);
+        $('#recipient-name-header').html(gon.recipients[currentRecipientIndex].role);
         /* change card state when clicked */
-        $(".card").click(function() {
-            $(this).toggleClass("inactive");
-            var okIcon = $(this).find($("span[class~='glyphicon-ok']"));
-            var banIcon = $(this).find($("span[class~='glyphicon-ban-circle']"));
-            if($(this).hasClass("inactive")) {
+        $('.card').click(function() {
+            $(this).toggleClass('inactive');
+            var okIcon = $(this).find($('span[class~="glyphicon-ok"]'));
+            var banIcon = $(this).find($('span[class~="glyphicon-ban-circle"]'));
+            if($(this).hasClass('inactive')) {
                 okIcon.hide();
                 banIcon.show();
             } else {
@@ -115,13 +126,13 @@ ready = function() {
                 banIcon.hide();
             }
         })
-        $("form").submit();
+        $('form').submit();
        lockCardsToCategories();
-       $("#help-link").off('click');
-       $("#help-modal-recipients").modal();
-       $("#help-link").click(function( event ) {
+       $('#help-link').off('click');
+       $('#help-modal-recipients').modal();
+       $('#help-link').click(function( event ) {
            event.preventDefault();
-           $("#help-modal-recipients").modal('show');
+           $('#help-modal-recipients').modal('show');
        });
     });
 
@@ -130,29 +141,29 @@ ready = function() {
     /* SHARING PREFERENCE COLLECTION */
     /* on moving to the next phase turn all cards into toggle button areas */
     /* watch the state of these */
-    $("#next-button").click(function() {
+    $('#next-button').click(function() {
         var sharingPrefs = [];
         var recipientId = gon.recipients[currentRecipientIndex].id;
         var surveyResponseId = 0;
         /* create JSON from states of cards */
-        $(".card").each(function() {
-            var cardId = $(this).attr('id').split("-")[1];
-            var share = "true";
-            if($(this).hasClass("inactive")) {
-                share = "false";
+        $('.card').each(function() {
+            var cardId = $(this).attr('id').split('-')[1];
+            var share = 'true';
+            if($(this).hasClass('inactive')) {
+                share = 'false';
             } else {
-                share = "true";
+                share = 'true';
             }
-            sharingPrefs.push({ "recipient_id": recipientId, "card_id": cardId, "share": share });
+            sharingPrefs.push({ 'recipient_id': recipientId, 'card_id': cardId, 'share': share });
         });
 
         /* send data to controller */
-        var responseJSON = {"survey_response":{"sharing_prefs_attributes":sharingPrefs}};
+        var responseJSON = {'survey_response':{'sharing_prefs_attributes':sharingPrefs}};
 
         $.ajax({
-            url: "<%= survey_responses_path %>/" + window.surveyResponseId,
-            type: "PATCH",
-            contentType: "application/json; charset=utf8",
+            url: '<%= survey_responses_path %>/' + window.surveyResponseId,
+            type: 'PATCH',
+            contentType: 'application/json; charset=utf8',
             data: JSON.stringify(responseJSON)
         });
 
@@ -162,7 +173,7 @@ ready = function() {
         if(currentRecipientIndex == gon.recipients.length - 1) {
             /* if we are out of recipients, hide this button and show the final submit to get off this page */
             /* redirect to the debrief */
-            /*window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);*/
+            /*window.location.replace('<%= survey_responses_path %>/' + window.surveyResponseId);*/
             window.progress++;
             updateProgress();
             questionnairePhase();
@@ -174,13 +185,13 @@ ready = function() {
 
 
     function resetIcons() {
-        $(".card").toggleClass("inactive",true);
-        $("span[class~='glyphicon-ban-circle']").show();
-        $("span[class~='glyphicon-ok']").hide();
+        $('.card').toggleClass('inactive',true);
+        $('span[class~="glyphicon-ban-circle"]').show();
+        $('span[class~="glyphicon-ok"]').hide();
     }
 
     function showNextRecipient() {
-        var header = $("#recipient-name-header");
+        var header = $('#recipient-name-header');
         header.fadeToggle(function() {
             header.html(gon.recipients[currentRecipientIndex].role);
             header.fadeToggle();
@@ -190,22 +201,22 @@ ready = function() {
     }
 
     function updateCategorySubmit() {
-        $("#submit-button").prop("disabled", false);
-        $(".card").each(function() {
+        $('#submit-button').prop('disabled', false);
+        $('.card').each(function() {
             if(dropCheck[$(this).attr( 'id' )] == false) {
-                $("#submit-button").prop("disabled", true);
+                $('#submit-button').prop('disabled', true);
             }
         });
     }
 
     function updateProgress() {
-        var currentWidth = $("#progressbar").css("width");
-        $("#progressbar").css("width", (window.progress/(gon.recipients.length+1))*100 + "%");
+        var currentWidth = $('#progressbar').css('width');
+        $('#progressbar').css('width', (window.progress/(gon.recipients.length+1))*100 + '%');
     }
 
     function lockCardsToCategories() {
         console.log(cardsToCats);
-        $(".movable").each(function(index, elem) {
+        $('.movable').each(function(index, elem) {
             $(elem).draggable({
                 stack: '.card',
                 revert: true,
@@ -215,40 +226,51 @@ ready = function() {
     }
 
     function questionnairePhase() {
-        $("#help-link").off('click');
-        $("#help-link").click(function( event ) {
+        $('#help-link').off('click');
+        $('#help-link').click(function( event ) {
             event.preventDefault( event );
-            $("#help-modal-questionnaire").modal();
+            $('#help-modal-questionnaire').modal();
         });
-        $("form").on("ajax:success", function(e, data, status, xhr) {
-            /*window.location.replace("<%= survey_responses_path %>/" + window.surveyResponseId);*/
+        $('form').on('ajax:success', function(e, data, status, xhr) {
+            /*window.location.replace('<%= survey_responses_path %>/' + window.surveyResponseId);*/
             debriefPhase();
         });
-        $(".card").hide();
-        $("hr").hide();
-        $("#recipients-control-area").hide();
-        $("#help-area-2").replaceWith(function() {
-            $("#help-area-3").show();
+        $('.card').hide();
+        $('hr').hide();
+        $('#recipients-control-area').hide();
+        $('#help-area-2').replaceWith(function() {
+            $('#help-area-3').show();
         });
-        $("#main-phase").replaceWith(function() {
-            $("#questionnaire-phase").show()
+        $('#main-phase').replaceWith(function() {
+            $('#questionnaire-phase').show()
         });
-        $("#next-button").replaceWith(function() {
-            $("#finish-button").show();
+        $('#next-button').replaceWith(function() {
+            $('#finish-button').show();
         })
-        $("#finish-button").click(function() {
-            $("form").submit();
+        $('#finish-button').click(function() {
+            $('form').submit();
         });
     }
 
     function debriefPhase() {
-        $("#help-link").off('click');
-        $("#help-area-3").hide();
-        $("#progress-panel").hide();
-        $("form").hide();
-        $("#help-area-debrief").show();
+        $('#help-link').off('click');
+        $('#help-area-3').hide();
+        $('#progress-panel').hide();
+        $('form').hide();
+        $('#help-area-debrief').show();
     }
 
+    /* add isotope to cards to dynamically lay them out */
+    function cardAutoLayout() {
+ 
+    }
+
+    function reParentCard(card, container) {
+        //var element = $(card).detach();
+        $(card).css("margin", "5px");        
+        container.parent().isotope('insert', $(card));
+    }
+    
 };
 
 $(document).ready(ready)
