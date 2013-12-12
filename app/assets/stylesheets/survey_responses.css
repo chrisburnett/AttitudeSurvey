@@ -1,13 +1,16 @@
 /*
  * Require the fluid squares css to get the cards to work.
  */
-
+html {
+  -webkit-font-smoothing: antialiased;
+}
 
 .card-drop-area-outer {
   /*width: 47%;  for 2 columns */
   width: 31%; /* for 3 columns */
   margin: 0 2% 30px 0;
   padding-bottom: 40%;
+  padding-top:20px;
   min-height: 100%;
   border-style: dashed;
   border-color: #18bc9c;
@@ -15,6 +18,8 @@
   border-width: 2px;
   border-radius: 5px;
   overflow: visible;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .card-drop-area{
@@ -22,9 +27,8 @@
   width:100%;
   height:100%;
   /*display: table-cell;*/
-  vertical-align: middle;
-  text-align: center;
   z-index: -1;
+  vertical-align: middle;
 }
 
 .card-drop-area-container {
@@ -64,6 +68,8 @@
 
 .card-drop-area-description {
   color: #18bc9c;
+  vertical-align: middle;
+  text-align: center;
   
 }
 

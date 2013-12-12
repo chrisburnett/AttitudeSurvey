@@ -29,7 +29,8 @@ ready = function() {
         $(this).popover({
             trigger: 'hover',
             title: 'Description',
-            content: $(this).data('description')
+            content: $(this).data('description'),
+            container: 'body'
         });
     });
 
@@ -99,8 +100,9 @@ ready = function() {
            transformsEnabled: false
        })
        $(".card").each(function() {
-           
            reParentCard(this,cardsToCats[this.id]);
+           console.log("dddddd");
+           $(this).draggable('disable');
        })
        $('#card-deck').hide();
         /* show the next bits of the interface */

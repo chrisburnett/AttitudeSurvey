@@ -82,7 +82,7 @@
   <%= render "instructions/logo_bar" %>
 </div>
 
-<hr/>
+
 <%= form_for @survey_response, remote: true do |s| %>
 
   <%
@@ -97,6 +97,14 @@
   %>
   <div id="main-phase">
     <div class="container-fixed" id="card-drop-area-container">
+      <div class="row">
+        <% categories.each do |category| %>
+          <div class="col-xs-4">
+            <h1 class="card-drop-area-description"><%= category[:title] %></h1>
+            <p class="card-drop-area-description"><%= category[:description] %></p>
+          </div>
+        <% end %>
+      </div>
       <% row_count.times do %>
         <div class="row">
           <% col_count.times do |i| %>
@@ -104,8 +112,7 @@
               <% category = categories.shift %>
               <div class="col-xs-4 card-drop-area-outer">
                 <div class="card-drop-area" id="category-<%= category[:id] %>">
-                  <h1 class="card-drop-area-description"><%= category[:title] %></h1>
-                  <p class="card-drop-area-description"><%= category[:description] %></p>
+
                 </div>
               </div>
             <% end %>
