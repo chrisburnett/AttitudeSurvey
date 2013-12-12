@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require jquery.ui.draggable
 //= require jquery.ui.droppable
+//= require jquery.ui.effect
 //= require_tree .

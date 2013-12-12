@@ -112,7 +112,7 @@ ready = function() {
             $('#recipients-control-area').show();
         });
         /* clear states of card buttons and set toggle handler*/
-        resetIcons();
+        resetCards();
 
         $('#recipient-name-header').html(gon.recipients[currentRecipientIndex].role);
         /* change card state when clicked */
@@ -170,7 +170,7 @@ ready = function() {
         });
 
         /* reset buttons */
-        resetIcons();
+        resetCards();
 
         if(currentRecipientIndex == gon.recipients.length - 1) {
             /* if we are out of recipients, hide this button and show the final submit to get off this page */
@@ -186,8 +186,8 @@ ready = function() {
     });
 
 
-    function resetIcons() {
-        $('.card').toggleClass('inactive',true);
+    function resetCards() {
+        $('.card').toggleClass('inactive',true, 1000, 'swing');
         $('span[class~="glyphicon-ban-circle"]').show();
         $('span[class~="glyphicon-ok"]').hide();
     }
@@ -264,15 +264,15 @@ ready = function() {
 
     /* add isotope to cards to dynamically lay them out */
     function cardAutoLayout() {
- 
+
     }
 
     function reParentCard(card, container) {
         //var element = $(card).detach();
-        $(card).css("margin", "5px");        
+        $(card).css("margin", "5px");
         container.parent().isotope('insert', $(card));
     }
-    
+
 };
 
 $(document).ready(ready)
