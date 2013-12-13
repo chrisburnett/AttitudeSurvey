@@ -55,22 +55,25 @@ html {
   border-style: solid;
   border-radius: 5px;
   border-width: 1px;
-  position: absolute;
+  position: relative;
   padding: 10px;
   height: 70px;
   width: 150px;
   text-align: center;
   color: #fff;
   border-color: #1e2a36;
-  background: #2c3e50;
+  background: #2c3e70;
   z-index:200;
 }
 
 .card-drop-area-description {
   color: #18bc9c;
   vertical-align: middle;
-  text-align: center;
-  
+  text-align: center;  
+}
+
+.card-label {
+  text-align:right;
 }
 
 .inactive {
@@ -79,8 +82,8 @@ html {
   
 }
 
-.card-spaced {
-  margin-left: 30px;
+.card-holder {
+  position: absolute;
 
 }
 

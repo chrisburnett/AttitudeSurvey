@@ -1,5 +1,5 @@
 <%= include_gon %>
-
+<% offset_amount = 2 %>
 <div class="modal fade" id="help-modal-cards" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -127,17 +127,23 @@
     <div class="panel-body">
       <div class="container">
         <div class="row">
-          <div id="categories-control-area" class="col-md-8" id="card-info">
+          <div id="categories-control-area" class="col-md-6" id="card-info">
             <p>Please drag each card from the deck onto an area to reflect its sensitivity.</p>
+          </div>
+          <div class="col-md-2 card-label">
+              <h4>Cards <span class="glyphicon glyphicon-arrow-right"></span></h4>
           </div>
           <div class="col-xs-4 pull-right">
             <div id="card-deck" class="btn-group"></div>
-            <% @survey.cards.each do |card| %>
-              <div class="card movable" id="card-<%= card.id %>" data-description="<%=card.description %>">
-                <%= card.title %>&nbsp;&nbsp;
-                <span class="glyphicon glyphicon-ok"></span>
-                <span class="glyphicon glyphicon-ban-circle"></span>
-              </div>
+            <% @survey.cards.each_with_index do |card, i| %>
+                <% offset = i * offset_amount %>
+                <div class="card-holder">
+                    <div class="card movable" id="card-<%= card.id %>" data-description="<%=card.description %>" style="bottom: <%= offset %>px; right: <%= offset * 0.7 %>px">
+                        <%= card.title %>&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-ok"></span>
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </div>
+                </div>
             <% end %>
           </div>
         </div>

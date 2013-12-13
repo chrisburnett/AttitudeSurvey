@@ -16,7 +16,8 @@ ready = function() {
 
     /* hide all the tick
        icons for now */
-    $('span').hide();
+    $('span[class~="glyphicon-ban-circle"]').hide();
+    $('span[class~="glyphicon-ok"]').hide();
 
     /* hash to track the assignment of cards - don't allow user to proceed until all cards */
     /* have been assigned */
@@ -75,9 +76,9 @@ ready = function() {
     });
     $('.movable').draggable({
         stack: '.card',
-        revert: true,
         containment: '#central-container',
         drag: function() {
+            // hide popoover when dragging
             $(this).popover('hide')
         }
     });
@@ -221,7 +222,6 @@ ready = function() {
         $('.movable').each(function(index, elem) {
             $(elem).draggable({
                 stack: '.card',
-                revert: true,
                 containment: $(cardsToCats[elem.id])
             });
         });
