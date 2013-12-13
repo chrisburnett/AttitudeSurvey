@@ -6,12 +6,16 @@
 
 <p>Your responses are completely confidential and cannot be linked to you. At the end of the survey, we would like to collect some basic demographic data so we can describe who has completed the questionnaire. However, you can skip this step if you would rather not give us this information.</p>
 
-<p>If you want to contact a member of the team to ask a question or for more information, please click on the email button or phone us on the numbers below.</p>
+<p>If you would like to contact a member of the team to ask a question or for more information, please click on the email button or phone us on the numbers below.</p>
 
 <p>If you would like to continue, please click the button below to begin.</p>
 
+<div class="form-group">
+    <%= check_box_tag :consent, class: "checkbox" %>
+    <%= label_tag :consent, 'I hereby consent to participate in the study.'%>
+</div>
 
-<%= link_to "Begin survey", new_survey_response_path, class: "btn btn-primary" %>
+<%= link_to 'Begin survey', new_survey_response_path, id: "begin-button", class: "btn btn-primary disabled" %>
 
 <hr>
 <%= render "contact_details" %>
