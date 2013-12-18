@@ -7,7 +7,7 @@
 
 <h2>Sharing preferences</h2>
 <% @survey_response.sharing_prefs.each do |pref| %>
-  <p>Card <%= pref.card.title %> - <%=%> pref.recipient.role %></p>
+  <p>Card <%= pref.card.title %> - <%= pref.recipient.role %>: <%= pref.share %></p>
 <% end %>
 
 

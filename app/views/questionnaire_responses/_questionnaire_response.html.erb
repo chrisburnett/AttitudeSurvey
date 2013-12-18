@@ -1,10 +1,19 @@
 <div>
-  <h2>Questionnaire response</h2>
-  <p>Gender: <%= @questionnaire_response.gender %></p>
-  <p>Employment: <%= @questionnaire_response.employment_status %></p>
-  <p>Age: <%= @questionnaire_response.age_range %></p>
-  <p>App user?: <%= @questionnaire_response.app_user %></p>
-  <p>Worked in healthcare?: <%= @questionnaire_response.worked_in_healthcare %></p>
-  <p>Healthcare occupation: <%= @questionnaire_response.worked_in_healthcare_occupation %></p>
-  <p>Feedback: <%= @questionnaire_response.open_feedback %></p>
+    <h2>Questionnaire response</h2>
+    <table>
+        <tr>
+            <th>Question</th>
+            <th>Response</th>
+        </tr>
+        <tr><td>Gender</td><td><%= @questionnaire_response.gender %></td></tr>
+
+        <tr><td>Employment</td><td><%= @questionnaire_response.employment_status %></td></tr>
+
+        <tr><td>Age</td><td><%= @questionnaire_response.age_range %></td></tr>
+        <tr><td>App user?</td><td><%= @questionnaire_response.app_user %></td></tr>
+        <tr><td>Worked in healthcare?</td><td><%= @questionnaire_response.worked_in_healthcare %></td></tr>
+        <tr><td>Healthcare occupation</td><td><%= @questionnaire_response.worked_in_healthcare_occupation %></td></tr>
+        <tr><td>Feedback</td><td><%= @questionnaire_response.open_feedback %></td></tr>
+    </table>
+
 </div>
