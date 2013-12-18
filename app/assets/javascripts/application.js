@@ -16,4 +16,5 @@
 //= require jquery.ui.draggable
 //= require jquery.ui.droppable
 //= require jquery.ui.effect
+//= require Chart.min
 //= require_tree .

@@ -51,6 +51,10 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
+  def index
+    @survey_responses = SurveyResponse.all
+  end
+
 
   private
   def survey_response_params
