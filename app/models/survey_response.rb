@@ -21,4 +21,5 @@ class SurveyResponse < ActiveRecord::Base
     %w[categories]
   end
 
+
 end

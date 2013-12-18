@@ -52,7 +52,9 @@ class SurveyResponsesController < ApplicationController
   end
 
   def index
-    @survey_responses = SurveyResponse.all
+    @survey = active_survey
+    @survey_run = active_survey_run
+    @survey_responses = @survey_run.survey_responses
   end
 
 

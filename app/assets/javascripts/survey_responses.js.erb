@@ -8,8 +8,8 @@ ready = function() {
         do_survey();
     else
         do_statistics();
-    
-    function do_survey() {        
+
+    function do_survey() {
         /* initial screen setup */
         $('#recipients-control-area').hide();
         $('#questionnaire-phase').hide();
@@ -97,6 +97,7 @@ ready = function() {
         /* move to recipient phase when first submit clicked */
         var currentRecipientIndex = 0;
         $('#submit-button').click(function() {
+
             /* setup isotope for auto-relayout */
             $(".card-drop-area-outer").isotope({
                 itemSelector: '.card',
@@ -105,7 +106,6 @@ ready = function() {
             })
             $(".card").each(function() {
                 reParentCard(this,cardsToCats[this.id]);
-                console.log("dddddd");
                 $(this).draggable('disable');
             })
                 $('#card-deck').hide();
@@ -149,6 +149,7 @@ ready = function() {
         /* on moving to the next phase turn all cards into toggle button areas */
         /* watch the state of these */
         $('#next-button').click(function() {
+
             var sharingPrefs = [];
             var recipientId = gon.recipients[currentRecipientIndex].id;
             var surveyResponseId = 0;
@@ -222,7 +223,7 @@ ready = function() {
         }
 
         function lockCardsToCategories() {
-            console.log(cardsToCats);
+
             $('.movable').each(function(index, elem) {
                 $(elem).draggable({
                     stack: '.card',
@@ -254,6 +255,12 @@ ready = function() {
                 $('#finish-button').show();
             })
             $('#finish-button').click(function() {
+
+                // First, remove the hidden fields for the card placements so that we don't get duplicates.
+                // there's probably a much cleaner way to do this...
+                $('input[type=hidden]').remove();
+                $('form').attr('action', '<%= survey_responses_path %>/' + window.surveyResponseId);
+                $('form').attr('method', 'patch');
                 $('form').submit();
             });
         }
@@ -266,26 +273,37 @@ ready = function() {
             $('#help-area-debrief').show();
         }
 
-        /* add isotope to cards to dynamically lay them out */
-        function cardAutoLayout() {
-
-        }
-
         function reParentCard(card, container) {
             //var element = $(card).detach();
             $(card).css("margin", "5px");
             container.parent().isotope('insert', $(card));
         }
     }
-    
+
     // If we are on the index page, execute the JS for doing the statistics.
     function do_statistics()
     {
-        //Get the context of the canvas element we want to select
-        var ctx = document.getElementById("myChart").getContext("2d");
-        var myNewChart = new Chart(ctx).PolarArea(data);
+        $(".card-assignment-pie").each(function() {
+            // var data = [
+	    //     {
+	    //         value: 30,
+	    //         color:"#F38630"
+	    //     },
+	    //     {
+	    //         value : 50,
+	    //         color : "#E0E4CC"
+	    //     },
+	    //     {
+	    //         value : 100,
+	    //         color : "#69D2E7"
+	    //     }
+            // ]
+            data = $(this).parent().parent().find($('.card-assignment-data')).data('proportions');
+            var ctx = $(this).get(0).getContext("2d");
+            new Chart(ctx).Doughnut(data);
+        })
     }
-    
+
 };
 
 $(document).ready(ready)
