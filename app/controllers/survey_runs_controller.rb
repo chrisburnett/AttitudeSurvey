@@ -35,6 +35,12 @@ class SurveyRunsController < ApplicationController
     redirect_to surveys_path
   end
 
+  def show
+    @survey = Survey.find(params[:survey_id])
+    @survey_run = SurveyRun.find(params[:id])
+    @survey_responses = @survey_run.survey_responses
+  end
+
   private
   def survey_run_params
     params.permit(:active)

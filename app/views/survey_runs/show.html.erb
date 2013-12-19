@@ -7,7 +7,9 @@
                warning: '#f39c12',
                danger: '#e74c3c' }.to_a  %>
 
-<p>Active survey: <%= @survey.title %> [ID: <%= @survey.id %>]</p>
+<h3>Survey: <%= @survey.title %><br>
+    <small>Survey ID: <%= @survey.id %>, Run ID: <%=@survey_run.id %></small></h3>
+
 
 <h2>Card sort phase</h2>
 

@@ -43,7 +43,6 @@ class SurveyResponsesController < ApplicationController
   def show
     @survey_response = SurveyResponse.find(params[:id])
     @questionnaire_response = @survey_response.questionnaire_response
-    puts @questionnaire_response
 
     respond_to do |format|
       format.html
@@ -51,11 +50,11 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
-  def index
-    @survey = active_survey
-    @survey_run = active_survey_run
-    @survey_responses = @survey_run.survey_responses
-  end
+  # def index
+  #   @survey = active_survey
+  #   @survey_run = active_survey_run
+  #   @survey_responses = @survey_run.survey_responses
+  # end
 
 
   private
