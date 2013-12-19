@@ -53,6 +53,9 @@
                             link_to 'Activate', survey_survey_run_path(run.survey,run, active: true), method: :patch end %>
                     </td>
                     <td>
+                        <%= link_to content_tag(:i, "", class: 'glyphicon glyphicon-dashboard'), survey_survey_run_path(run.survey, run) %>
+                    </td>
+                    <td>
                         <%= if(!run.active?) then link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-trash'), survey_survey_run_path(run.survey, run), method: :delete, confirm: 'Are you sure?' end %>
                     </td>
                 </tr>
