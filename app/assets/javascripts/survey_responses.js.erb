@@ -7,6 +7,7 @@ ready = function() {
 
 
     /* initial screen setup */
+    $('.bulk-select').hide();
     $('#recipients-control-area').hide();
     $('#questionnaire-phase').hide();
     $('#help-area-2').hide();
@@ -100,11 +101,12 @@ ready = function() {
             layoutMode: 'fitRows',
             transformsEnabled: false
         })
+        /* reparent cards to their containers (disables dragging) */
         $(".card").each(function() {
             reParentCard(this,cardsToCats[this.id]);
             $(this).draggable('disable');
-        })
-            $('#card-deck').hide();
+        });
+        $('#card-deck').hide();
         $('.card-label').hide();
         /* show the next bits of the interface */
         $(this).replaceWith(function() { $('#next-button').show() });
@@ -117,18 +119,7 @@ ready = function() {
 
         $('#recipient-name-header').html(gon.recipients[currentRecipientIndex].role);
         /* change card state when clicked */
-        $('.card').click(function() {
-            $(this).toggleClass('inactive');
-            var okIcon = $(this).find($('span[class~="glyphicon-ok"]'));
-            var banIcon = $(this).find($('span[class~="glyphicon-ban-circle"]'));
-            if($(this).hasClass('inactive')) {
-                okIcon.hide();
-                banIcon.show();
-            } else {
-                okIcon.show();
-                banIcon.hide();
-            }
-        })
+        $('.card').click(function() { toggleCard(this) });
         $('form').submit();
         lockCardsToCategories();
         $('#help-link').off('click');
@@ -137,6 +128,9 @@ ready = function() {
             event.preventDefault();
             $('#help-modal-recipients').modal('show');
         });
+        
+        /* add selection convenience buttons */
+        showBulkSelect();
     });
 
 
@@ -149,6 +143,7 @@ ready = function() {
         var sharingPrefs = [];
         var recipientId = gon.recipients[currentRecipientIndex].id;
         var surveyResponseId = 0;
+        
         /* create JSON from states of cards */
         $('.card').each(function() {
             var cardId = $(this).attr('id').split('-')[1];
@@ -187,6 +182,33 @@ ready = function() {
         }
     });
 
+    /* Adds 'select all' and 'deselect all' to each category */
+    function showBulkSelect() {
+        $('.bulk-select').each(function() { 
+            var categoryId = $(this).attr('id').split('-')[3];
+            if ($('.card-drop-area[id$='+categoryId+']').siblings('.card').length > 0) {
+                $(this).show();
+            }
+        })
+        $('.bulk-select').click(function(event) {
+            event.preventDefault();
+            var categoryId = $(this).attr('id').split('-')[3];
+            var state = ($(this).html().trim().charAt(0) == "S");
+            $('.card-drop-area[id$='+categoryId+']').siblings('.card').each(function() {
+                if($(this).hasClass('inactive')) { 
+                    if(state) { toggleCard(this) };
+                } else {
+                    if(!state) { toggleCard(this) };
+                }
+                hasItems = true;
+            });
+            if(!state) {
+                $(this).html('Select all these items');
+            } else {
+                $(this).html('Deselect all these items');
+            }
+        });
+    }
 
     function resetCards() {
         $('.card').toggleClass('inactive',true, 1000, 'swing');
@@ -273,6 +295,19 @@ ready = function() {
         //var element = $(card).detach();
         $(card).css("margin", "5px");
         container.parent().isotope('insert', $(card));
+    }
+
+    function toggleCard(card) {
+        $(card).toggleClass('inactive');
+        var okIcon = $(card).find($('span[class~="glyphicon-ok"]'));
+        var banIcon = $(card).find($('span[class~="glyphicon-ban-circle"]'));
+        if($(card).hasClass('inactive')) {
+            okIcon.hide();
+            banIcon.show();
+        } else {
+            okIcon.show();
+            banIcon.hide();
+        }
     }
 
 };
