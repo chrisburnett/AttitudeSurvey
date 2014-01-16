@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211121930) do
+ActiveRecord::Schema.define(version: 20140116114107) do
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20131211121930) do
     t.datetime "updated_at"
     t.boolean  "worked_in_healthcare"
     t.string   "worked_in_healthcare_occupation"
+    t.text     "comments"
   end
 
   add_index "questionnaire_responses", ["survey_response_id"], name: "index_questionnaire_responses_on_survey_response_id"
