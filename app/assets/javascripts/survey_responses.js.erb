@@ -118,6 +118,8 @@ ready = function() {
         resetCards();
 
         $('#recipient-name-header').html(gon.recipients[currentRecipientIndex].role);
+        $('#recipient-description-text').html(gon.recipients[currentRecipientIndex].description);
+
         /* change card state when clicked */
         $('.card').click(function() { toggleCard(this) });
         $('form').submit();
@@ -218,8 +220,10 @@ ready = function() {
 
     function showNextRecipient() {
         var header = $('#recipient-name-header');
+        var description = $('#recipient-description-text');
         header.fadeToggle(function() {
             header.html(gon.recipients[currentRecipientIndex].role);
+            description.html(gon.recipients[currentRecipientIndex].description);
             header.fadeToggle();
         });
         window.progress++;
