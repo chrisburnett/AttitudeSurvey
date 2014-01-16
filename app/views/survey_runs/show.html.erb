@@ -10,6 +10,42 @@
 <h3>Survey: <%= @survey.title %><br>
     <small>Survey ID: <%= @survey.id %>, Run ID: <%=@survey_run.id %></small></h3>
 
+<h2>Response times</h2>
+<% datasets = [] %>
+<% data = Array.new(6, 0) %>
+<% categories = [ ->(t) { t < 2 },
+                  ->(t) { t.between?(2,5) },
+                  ->(t) { t.between?(5,10) },
+                  ->(t) { t.between?(10,15) },
+                  ->(t) { t.between?(15,20) },
+                  ->(t) { t > 20 }
+                 ] %>
+
+<% @survey_run.survey_responses.each do |resp| %>
+    <% diff= (resp.finish_time - resp.start_time) / 60 %>
+    <% categories.each_with_index do |cat, i| %>
+        <% if cat.call(diff) then data[i] = data[i] + 1 %>
+        <% end %>
+    <% end %>
+<% end %>
+
+
+<% datasets << { strokeColor: @colours[1][1],
+                fillColor: @colours[1][1],
+                pointColor: @colours[1][1],
+                pointsStrokeColor: @colours[1][1],
+                data: data } %>
+
+<% timing_data = {
+ datasets: datasets,
+ labels: ["< 2 m", "2-5 m", "5-10m", "10-15 m", "15-20 m", "> 20 m"]
+}
+%>
+<div class="panel panel-default">
+    <canvas id="response-timings-chart" width="350" height="200">
+    </canvas>
+    <%= content_tag :div, id: 'response-timings-data', data: { timings: timing_data } do %><% end %>
+</div>
 
 <h2>Card sort phase</h2>
 

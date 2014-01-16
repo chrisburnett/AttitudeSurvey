@@ -10,5 +10,11 @@ ready = ->
                         .data('proportions')
                 context = $(element).get(0).getContext('2d')
                 new Chart(context).Doughnut(data)
+
+        timingsChart = $('#response-timings-chart')
+        context = timingsChart.get(0).getContext('2d')
+        data = $('#response-timings-data').data('timings')
+        new Chart(context).Line(data)
+        
 $(document).ready(ready)
 $(document).on('page:load', ready)

@@ -166,6 +166,7 @@
                     <%= render "questionnaire_response_fields", f: qr %>
                 <% end %>
             </div>
+            <%= s.hidden_field :start_time %>
             <%= s.submit "Next", class: "btn btn-primary", id: "submit-button" %>
             <%= s.submit "Finish", class: "btn btn-success", id: "finish-button" %>
             <button type="button" class="btn btn-primary" id="next-button">Next</button>
