@@ -10,7 +10,6 @@
 <h3>Survey: <%= @survey.title %><br>
     <small>Survey ID: <%= @survey.id %>, Run ID: <%=@survey_run.id %></small></h3>
 
-<h2>Response times</h2>
 <% datasets = [] %>
 <% data = Array.new(6, 0) %>
 <% categories = [ ->(t) { t < 2 },
@@ -20,14 +19,24 @@
                   ->(t) { t.between?(15,20) },
                   ->(t) { t > 20 }
                  ] %>
+<% completion_data = Array.new(2, 0) %>
+<% sum = 0 %>
 
 <% @survey_run.survey_responses.each do |resp| %>
-    <% diff= (resp.finish_time - resp.start_time) / 60 %>
-    <% categories.each_with_index do |cat, i| %>
-        <% if cat.call(diff) then data[i] = data[i] + 1 %>
+    <% if resp.finish_time %>
+        <% completion_data[1] += 1 %>
+        <% diff= (resp.finish_time - resp.start_time) / 60 %>
+        <% sum += diff %>
+        <% categories.each_with_index do |cat, i| %>
+            <% if cat.call(diff) then data[i] += 1 %>
+            <% end %>
         <% end %>
+    <% else %>
+        <% completion_data[0] += 1 %>
     <% end %>
 <% end %>
+
+<% avg_time = sum / completion_data[1] %>
 
 
 <% datasets << { strokeColor: @colours[1][1],
@@ -41,10 +50,41 @@
  labels: ["< 2 m", "2-5 m", "5-10m", "10-15 m", "15-20 m", "> 20 m"]
 }
 %>
-<div class="panel panel-default">
-    <canvas id="response-timings-chart" width="350" height="200">
-    </canvas>
-    <%= content_tag :div, id: 'response-timings-data', data: { timings: timing_data } do %><% end %>
+<div class="wrap">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Response timings</div>
+                <div class="panel-body">
+                    <canvas id="response-timings-chart" width="400" height="200">
+                    </canvas>
+                    <%= content_tag :div, id: 'response-timings-data', data: { timings: timing_data } do %><% end %>
+                </div>
+                <div class="panel-footer">
+                    Average time to complete: <%= avg_time.to_i + (((avg_time % 1) * 60) / 100).round(2) %>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Completed responses</div>
+                <div class="panel-body">
+                    <canvas id="response-completion-chart" width="200" height="200">
+                     </canvas>
+                     <% data = [] %>
+                     <% completion_data.each_with_index do |d, i| %>
+                         <% data << { value: d,
+                                      color: @colours[i][1] } %>
+                     <% end %>
+                    <%= content_tag :div, id: 'response-completion-data', data: { completions: data } do %><% end %>
+                </div>
+                <div class="panel-footer">
+                    <span class="label label-<%= @colours[0][0] %>">Open: <%= completion_data[0] %></span>
+                    <span class="label label-<%= @colours[1][0] %>">Complete: <%= completion_data[1] %></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <h2>Card sort phase</h2>

@@ -16,5 +16,12 @@ ready = ->
         data = $('#response-timings-data').data('timings')
         new Chart(context).Line(data)
         
+        completionsChart = $('#response-completion-chart')
+        context = completionsChart.get(0).getContext('2d')
+        data = $('#response-completion-data').data('completions')
+        new Chart(context).Doughnut(data)
+
+        
+        
 $(document).ready(ready)
 $(document).on('page:load', ready)
