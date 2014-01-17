@@ -170,6 +170,8 @@ ready = function() {
 
         /* reset buttons */
         resetCards();
+        /* reset bulk selectors */
+        resetBulkSelect();
 
         if(currentRecipientIndex == gon.recipients.length - 1) {
             /* if we are out of recipients, hide this button and show the final submit to get off this page */
@@ -210,6 +212,10 @@ ready = function() {
                 $(this).html('Deselect all these items');
             }
         });
+    }
+
+    function resetBulkSelect() {
+        $('.bulk-select').html('Select all these items');
     }
 
     function resetCards() {
