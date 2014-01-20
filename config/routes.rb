@@ -6,6 +6,8 @@ AttitudeSurvey::Application.routes.draw do
     resources :survey_runs
   end
 
+  get '/admin', to: 'surveys#index'
+
   resources :cards
   resources :recipients
   resources :sensitivity_categories
