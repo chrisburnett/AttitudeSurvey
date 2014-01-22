@@ -39,6 +39,7 @@ class SurveyRunsController < ApplicationController
     @survey = Survey.find(params[:survey_id])
     @survey_run = SurveyRun.find(params[:id])
     @survey_responses = @survey_run.survey_responses
+    @open_responses = @survey_responses.where(finish_time: nil)
   end
 
   private

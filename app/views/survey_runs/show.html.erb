@@ -50,6 +50,9 @@
  labels: ["< 2 m", "2-5 m", "5-10m", "10-15 m", "15-20 m", "> 20 m"]
 }
 %>
+
+<%= content_tag :div, id: 'open-responses', data: { open_responses: @open_responses } do %><% end %>
+
 <div class="wrap">
     <div class="row">
         <div class="col-xs-6">
@@ -67,7 +70,9 @@
         </div>
         <div class="col-xs-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Completed responses</div>
+                <div class="panel-heading">Completed responses <button type="button" class="btn btn-primary btn-xs pull-right" id="clear-open-response-button">Delete open surveys</button>
+
+</div>
                 <div class="panel-body">
                     <canvas id="response-completion-chart" width="200" height="200">
                      </canvas>
@@ -79,9 +84,9 @@
                     <%= content_tag :div, id: 'response-completion-data', data: { completions: data } do %><% end %>
                 </div>
                 <div class="panel-footer">
-                    <span class="label label-<%= @colours[0][0] %>">Open: <%= completion_data[0] %></span>
-                    <span class="label label-<%= @colours[1][0] %>">Complete: <%= completion_data[1] %></span>
-                    <span class="label label-<%= @colours[2][0] %>">Total: <%= completion_data[0] + completion_data[1] %></span>
+                    <span id="completion-count-open" class="label label-<%= @colours[0][0] %>">Open: <%= completion_data[0] %></span>
+                    <span id="completion-count-complete" class="label label-<%= @colours[1][0] %>">Complete: <%= completion_data[1] %></span>
+                    <span id="completion-count-total" class="label label-<%= @colours[2][0] %>">Total: <%= completion_data[0] + completion_data[1] %></span>
                 </div>
             </div>
         </div>

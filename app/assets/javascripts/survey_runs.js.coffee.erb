@@ -1,6 +1,17 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+generateCompletionsChart = (data) ->
+        $("#response-completion-chart").attr('width', '200')
+        $("#response-completion-chart").attr('height', '200')
+        completionsChart = $('#response-completion-chart')
+        completionContext = completionsChart.get(0).getContext('2d')
+        new Chart(completionContext).Doughnut(data)
+        $("#completion-count-open").text("Open: " + data[0].value)
+        $("#completion-count-complete").text("Complete: " + data[1].value)
+        $("#completion-count-total").text("Total: " + (data[0].value + data[1].value))
+        
+
 ready = ->
         $('.card-assignment-pie').each (index, element) ->
                 data = $(element)
@@ -16,12 +27,19 @@ ready = ->
         data = $('#response-timings-data').data('timings')
         new Chart(context).Line(data)
         
-        completionsChart = $('#response-completion-chart')
-        context = completionsChart.get(0).getContext('2d')
-        data = $('#response-completion-data').data('completions')
-        new Chart(context).Doughnut(data)
+        completion_data = $('#response-completion-data').data('completions')
+        generateCompletionsChart(completion_data)
+                
+        # works - now just need to dynamically update the graph
+        $('#clear-open-response-button').click ->
+                openResponses = $('#open-responses').data('open-responses')
+                for resp in openResponses
+                        do (resp) ->
+                                $.ajax '<%= survey_responses_path %>/' + resp.id,
+                                        type: 'DELETE'
+                                        contentType:  'application/json; charset=utf8'
+                completion_data[0].value = 0
+                generateCompletionsChart(completion_data)
 
-        
-        
 $(document).ready(ready)
 $(document).on('page:load', ready)

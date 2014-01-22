@@ -37,7 +37,6 @@ class SurveyResponsesController < ApplicationController
     # we know the survey is completed once a questionnaire response object is provided, so
     # use this to set the finishing time step
     if params[:commit]
-      puts "I SAW THE SIGNS"
       @survey_response.finish_time = Time.now
       @survey_response.save
     end
@@ -64,6 +63,14 @@ class SurveyResponsesController < ApplicationController
   #   @survey_responses = @survey_run.survey_responses
   # end
 
+  def destroy
+    @survey_response = SurveyResponse.find(params[:id])
+    @survey_response.destroy
+
+    respond_to do |format|
+      format.json { render json: @survey_response }
+    end
+  end
 
   private
   def survey_response_params
