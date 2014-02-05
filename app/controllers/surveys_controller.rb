@@ -7,8 +7,13 @@ class SurveysController < ApplicationController
   # GET /surveys
   # GET /surveys.json
   def index
-    @surveys = Survey.all
-    @survey_runs = SurveyRun.all
+    if(params[:id]) then
+      @survey = Survey.find(params[:id])
+      redirect_to @survey
+    else
+      @surveys = Survey.all
+      @survey_runs = SurveyRun.all
+    end
   end
 
   # GET /surveys/1
