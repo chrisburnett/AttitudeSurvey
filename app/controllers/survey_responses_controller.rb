@@ -3,8 +3,6 @@ class SurveyResponsesController < ApplicationController
   def new
     @survey = active_survey
     @survey_response = active_survey_run.survey_responses.build
-    # if we have an externally provided ID in the session, set it
-    @survey_response.rnid = session[:subsid]
     # add the card placements
     @survey.cards.each do |card|
       @survey_response.card_placements.build(card_id: card.id)
@@ -20,6 +18,8 @@ class SurveyResponsesController < ApplicationController
   def create
     @survey_run = active_survey_run
     @survey_response = @survey_run.survey_responses.build(survey_response_params)
+    # if we have an externally provided ID in the session, set it
+    @survey_response.rnid = session[:subsid]
     @survey_response.save
     # respond with the survey_response ID so subsequent AJAX calls can append
     respond_to do |format|
