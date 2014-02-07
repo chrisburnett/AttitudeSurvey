@@ -1,3 +1,9 @@
+<%= javascript_tag do %>
+    var subsid = '<%= session[:subsid] %>';
+    var screenout_link = '<%= AttitudeSurvey::Application.config.referrer_screenout_link %>';
+    var quotafull_link = '<%= AttitudeSurvey::Application.config.referrer_quotafull_link %>';
+<% end %>
+
 <h1>Health Information Privacy Survey</h1>
 
 <p>This questionnaire is part of a large study (<a href="http://trump-india-uk.org">TRUMP</a>) funded by the <a href="http://www.rcuk.ac.uk/research/xrcprogrammes/Digital/Pages/home.aspx"</a>RCUK Digital Economy programme</a>. This study is a comparative study with India and is developing a support system for people living in rural areas who are suffering from chronic illnesses (such as diabetes, or depression) using mobile phone technology.</p>
@@ -16,6 +22,11 @@ Yes - if you wish to withdraw at any time after beginning, simply navigate away 
 <h4>What happens to the information I provide?</h4>
 <p>Your responses are completely confidential and cannot be linked to you. The University of Aberdeen complies with the Data Protection Act (1998) and all information will be treated with the strictest confidence. At the end of the survey, we would like to collect some basic demographic data. However, you can skip this step if you would rather not give us this information.</p>
 
+<h4>Eligibility</h4>
+You must be <strong>ordinarily resident</strong> in the UK in order to participate in this survey.
+<% if params[:subsid] then %>
+    If you are not resident in the UK, please <%= link_to 'click here to return to Research Now', AttitudeSurvey::Application.config.referrer_screenout_link %>
+<% end %>
 
 <h4>More information</h4>
 <p>If you would like to contact a member of the team to ask a question or for more information, please click on the email button or phone us on the numbers below.</p>
@@ -23,11 +34,19 @@ Yes - if you wish to withdraw at any time after beginning, simply navigate away 
 <p>If you would like to continue, please click the button below to begin.</p>
 
 <div class="form-group">
+    <%= check_box_tag :resident, class: "checkbox" %>
+    <%= label_tag :resident, 'I hereby confirm that I am ordinarily resident in the UK.'%>
+</div>
+
+<div class="form-group">
     <%= check_box_tag :consent, class: "checkbox" %>
     <%= label_tag :consent, 'I hereby consent to participate in the study.'%>
 </div>
 
+
 <%= link_to 'Begin survey', new_survey_response_path, id: "begin-button", class: "btn btn-primary disabled" %>
+<%= if params[:subsid] then link_to 'Return to Research Now', AttitudeSurvey::Application.config.referrer_screenout_link, id: "screenout-button", class: "btn btn-primary" end %>
+
 
 <hr>
 <%= render "contact_details" %>
