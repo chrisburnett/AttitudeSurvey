@@ -15,6 +15,7 @@ ready = function() {
     $('#help-area-debrief').hide();
     $('#next-button').hide();
     $('#finish-button').hide();
+    $('#return-to-referrer-div').hide();
     $('#submit-button').prop('disabled', true);
 
     /* hide all the tick
@@ -299,6 +300,8 @@ ready = function() {
         $('#progress-panel').hide();
         $('form').hide();
         $('#help-area-debrief').show();
+        // if we have an external ID, show return button
+        if(subsid != "") { backToExternalReferrer(); }
     }
 
     function reParentCard(card, container) {
@@ -318,6 +321,19 @@ ready = function() {
             okIcon.show();
             banIcon.hide();
         }
+    }
+
+    function backToExternalReferrer() {
+        $("#return-to-referrer-button").attr("href", complete_link + subsid);
+        $("#return-to-referrer-div").show();
+    }
+
+    function screenoutToExternalReferrer() {
+        window.locaton.href = screenout_link + subsid;
+    }
+
+    function quotafullToExternalReferrer() {
+        window.location.href = quotafull_link + subsid;
     }
 };
 

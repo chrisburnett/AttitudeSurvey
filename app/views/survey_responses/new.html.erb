@@ -1,4 +1,12 @@
 <%= include_gon %>
+
+<%= javascript_tag do %>
+    var subsid = '<%= session[:subsid] %>';
+    var complete_link = '<%= AttitudeSurvey::Application.config.referrer_complete_link %>';
+    var screenout_link = '<%= AttitudeSurvey::Application.config.referrer_screenout_link %>';
+    var quotafull_link = '<%= AttitudeSurvey::Application.config.referrer_quotafull_link %>';
+<% end %>
+
 <% offset_amount = 2 %>
 <div class="modal fade" id="help-modal-cards" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -77,7 +85,10 @@
     <h2>Thank you for your participation!</h2>
     <p>Thank you for taking part in this survey. This data will be used to inform the development of our mobile phone intervention.</p>
     <p>You can read more about the study at the <a href="http://www.trump-india-uk.org">TRUMP project homepage</a>.</p>
-    <p>If you would like to be kept informed about results or publications resulting from this research, please contact us using the details below:</p>
+    <p>If you would like to be kept informed about results or publications resulting from this research, please contact us using the details below.</p>
+    <div id="return-to-referrer-div">
+        <a id="return-to-referrer-button" class="btn btn-default" href="#" role="button">Return to Research Now...</a>
+    </div>
     <%= render "instructions/contact_details" %>
     <%= render "instructions/logo_bar" %>
 </div>
