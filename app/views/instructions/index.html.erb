@@ -1,5 +1,5 @@
 <%= javascript_tag do %>
-    var subsid = '<%= session[:subsid] %>';
+    var subsid = '<%= params[:subsid] %>';
     var screenout_link = '<%= AttitudeSurvey::Application.config.referrer_screenout_link %>';
     var quotafull_link = '<%= AttitudeSurvey::Application.config.referrer_quotafull_link %>';
 <% end %>
@@ -22,6 +22,11 @@ Yes - if you wish to withdraw at any time after beginning, simply navigate away 
 <h4>What happens to the information I provide?</h4>
 <p>Your responses are completely confidential and cannot be linked to you. The University of Aberdeen complies with the Data Protection Act (1998) and all information will be treated with the strictest confidence. At the end of the survey, we would like to collect some basic demographic data. However, you can skip this step if you would rather not give us this information.</p>
 
+<% if params[:subsid] then %>
+    <h4>Cookies</h4>
+    <p>This survey will store a small piece of information (a "cookie") on your computer, which contains only your Research Now participant ID. It is not possible for us to learn anything about you using this information. For more information about cookies, please visit <a href="http://www.aboutcookies.org">www.aboutcookies.org</a>.</p>
+<% end %>
+
 <h4>Eligibility</h4>
 You must be <strong>ordinarily resident</strong> in the UK in order to participate in this survey.
 <% if params[:subsid] then %>
@@ -33,13 +38,20 @@ You must be <strong>ordinarily resident</strong> in the UK in order to participa
 
 <p>If you would like to continue, please click the button below to begin.</p>
 
+<% if params[:subsid] %>
+    <div class="form-group">
+        <%= check_box_tag :cookies, class: "checkbox required-check" %>
+        <%= label_tag :cookies, 'I consent to the storage of a temporary cookie on my computer.' %>
+    </div>
+<% end %>
+
 <div class="form-group">
-    <%= check_box_tag :resident, class: "checkbox" %>
+    <%= check_box_tag :resident, class: "checkbox required-check" %>
     <%= label_tag :resident, 'I hereby confirm that I am ordinarily resident in the UK.'%>
 </div>
 
 <div class="form-group">
-    <%= check_box_tag :consent, class: "checkbox" %>
+    <%= check_box_tag :consent, class: "checkbox required-check" %>
     <%= label_tag :consent, 'I hereby consent to participate in the study.'%>
 </div>
 
