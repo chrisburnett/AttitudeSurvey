@@ -1,5 +1,9 @@
 <h1>Survey Results Summary</h1>
 
+<% def acronymize(str)
+    return str.gsub(/(([a-zA-Z0-9])([a-zA-Z0-9])*)./,"\\2") %>
+<% end %>
+
 <% @colours = { default: '#95a5a6',
                primary: '#2c3e50',
                success: '#18bc9c',
@@ -132,7 +136,7 @@
 
 <h2>Sharing phase</h2>
 <% sharing_data_labels = [] %>
-<% @survey.recipients.each do |r| sharing_data_labels << r.role %>
+<% @survey.recipients.each do |r| sharing_data_labels << acronymize(r.role) %>
 <% end %>
 
 <div class="wrap">
@@ -140,7 +144,7 @@
         <% @survey.cards.each do |card| %>
             <% sharing_data = [] %>
             <% @survey.recipients.each do |recipient| %>
-                <% sharing_data << @survey_run.number_times_card_assigned_to_recipient(card, recipient) %>
+                <% sharing_data << @survey_run.proportion_card_assigned_to_recipient(card, recipient) %>
             <% end %>
             <% sharing_data_frame = { labels: sharing_data_labels,
                                      datasets: [ { fillColor: @colours[1][1],
