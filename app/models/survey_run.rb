@@ -29,7 +29,7 @@ class SurveyRun < ActiveRecord::Base
       .where(sharing_prefs:
              {recipient_id: recipient.id, card_id: card.id, share: true}).length
 
-    share_count.to_f / response_count.to_f
+    ((share_count.to_f / response_count.to_f) * 100).to_i
   end
 
 end
