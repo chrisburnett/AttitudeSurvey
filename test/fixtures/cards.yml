@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  text: MyString
-  description: MyString
+mentalHealth:
+  text: Mental Health
+  description: Mental Health
 
-two:
-  text: MyString
-  description: MyString
+contactInfo:
+  text: Contact Info
+  description: Contact Info
+
+prescriptions:
+  text: Prescriptions
+  description: Prescriptions

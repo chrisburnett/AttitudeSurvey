@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  role: MyString
-  description: MyText
+doctor:
+  role: Doctor
+  description: Doctor
 
-two:
-  role: MyString
-  description: MyText
+nurse:
+  role: Nurse
+  description: Nurse
+
+specialist:
+  role: Specialist
+  description: specialist

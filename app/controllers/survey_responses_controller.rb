@@ -13,9 +13,10 @@ class SurveyResponsesController < ApplicationController
     @survey_response.start_time = Time.now
     # send the recipient cards to javascript so we can page through them without refreshing
     gon.recipients = @survey.recipients
-  end
+  endx
 
   def create
+    
     @survey_run = active_survey_run
     @survey_response = @survey_run.survey_responses.build(survey_response_params)
     # if we have an externally provided ID in the session, set it

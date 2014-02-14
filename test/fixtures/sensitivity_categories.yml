@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  description: MyText
+high:
+  title: High
+  description: Highly sensitive
 
-two:
-  title: MyString
-  description: MyText
+medium:
+  title: Medium
+  description: Medium sensitive
+
+low:
+  title: Low
+  description: Low sensitive

@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
+  title: SocialMediaSurvey
+  description: A survey run on social media websites
 
 two:
-  title: MyString
-  description: MyText
+  title: ExternalReferrerSurvey
+  description: A survey run via an external referrer

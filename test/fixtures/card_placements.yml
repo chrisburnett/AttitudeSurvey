@@ -1,9 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  card_id: 
-  survey_response_id: 
+  card: mentalHealth
+  survey_response: rnidResponse
+  sensitivity_category: high
 
 two:
-  card_id: 
-  survey_response_id: 
+  card: contactInfo
+  survey_response: rnidResponse
+  sensitivity_category: medium
+
+three:
+  card: prescriptions
+  survey_response: rnidResponse
+  sensitivity_category: low
+
+four:
+  card: mentalHealth
+  survey_response: socialmediaResponse
+  sensitivity_category: low
+
+five:
+  card: contactInfo
+  survey_response: socialmediaResponse
+  sensitivity_category: low
+
+six:
+  card: prescriptions
+  survey_response: socialmediaResponse
+  sensitivity_category: high
