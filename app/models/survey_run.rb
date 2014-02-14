@@ -19,4 +19,12 @@ class SurveyRun < ActiveRecord::Base
     card_to_cat_count.to_f / response_count.to_f
   end
 
+  # return number of times card shared with recipient
+  def number_times_card_assigned_to_recipient(card, recipient)
+    share_count = survey_responses
+      .joins(:sharing_prefs)
+      .where(sharing_prefs:
+             {recipient_id: recipient.id, card_id: card.id}).length
+  end
+
 end

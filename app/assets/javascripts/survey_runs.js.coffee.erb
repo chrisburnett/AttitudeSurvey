@@ -1,6 +1,8 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+<% routes = AttitudeSurvey::Application.routes.url_helpers %>
+
 generateCompletionsChart = (data) ->
         $("#response-completion-chart").attr('width', '200')
         $("#response-completion-chart").attr('height', '200')
@@ -10,36 +12,38 @@ generateCompletionsChart = (data) ->
         $("#completion-count-open").text("Open: " + data[0].value)
         $("#completion-count-complete").text("Complete: " + data[1].value)
         $("#completion-count-total").text("Total: " + (data[0].value + data[1].value))
-        
 
 ready = ->
         $('.card-assignment-pie').each (index, element) ->
-                data = $(element)
-                        .parent()
-                        .parent()
-                        .find($('.card-assignment-data'))
-                        .data('proportions')
+                data = $(element).parent().parent().find($('.card-assignment-data')).data('proportions')
                 context = $(element).get(0).getContext('2d')
                 new Chart(context).Doughnut(data)
+
+        $('.sharing-preference-bars').each (index, element) ->
+                data = $(element)
+                        .parent()
+                        .find($('.sharing-data'))
+                        .data('sharing-prefs')
+                context = $(element).get(0).getContext('2d')
+                new Chart(context).Bar(data)
 
         timingsChart = $('#response-timings-chart')
         context = timingsChart.get(0).getContext('2d')
         data = $('#response-timings-data').data('timings')
         new Chart(context).Line(data)
-        
         completion_data = $('#response-completion-data').data('completions')
         generateCompletionsChart(completion_data)
-                
+
         # works - now just need to dynamically update the graph
         $('#clear-open-response-button').click ->
                 openResponses = $('#open-responses').data('open-responses')
                 for resp in openResponses
                         do (resp) ->
-                                $.ajax '<%= survey_responses_path %>/' + resp.id,
+                                $.ajax '<%= routes.survey_responses_path %>/' + resp.id,
                                         type: 'DELETE'
                                         contentType:  'application/json; charset=utf8'
                 completion_data[0].value = 0
                 generateCompletionsChart(completion_data)
-
+                                   
 $(document).ready(ready)
 $(document).on('page:load', ready)

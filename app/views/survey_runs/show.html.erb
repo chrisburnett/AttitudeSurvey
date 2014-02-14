@@ -36,7 +36,7 @@
     <% end %>
 <% end %>
 
-<% if completion_data[1] > 0 then avg_time = sum / completion_data[1] else avg_time = 0 end %>
+<% if completion_data[1] > 0 then avg_time = sum / completion_data[1] else avg_time = 0 %><% end %>
 
 
 <% datasets << { strokeColor: @colours[1][1],
@@ -71,8 +71,8 @@
         <div class="col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Completed responses <button type="button" class="btn btn-primary btn-xs pull-right" id="clear-open-response-button">Delete open surveys</button>
-
-</div>
+                    
+                </div>
                 <div class="panel-body">
                     <canvas id="response-completion-chart" width="200" height="200">
                      </canvas>
@@ -81,7 +81,8 @@
                          <% data << { value: d,
                                       color: @colours[i][1] } %>
                      <% end %>
-                    <%= content_tag :div, id: 'response-completion-data', data: { completions: data } do %><% end %>
+                    <%= content_tag :div, id: 'response-completion-data', data: { completions: data } do %>
+                    <% end %>
                 </div>
                 <div class="panel-footer">
                     <span id="completion-count-open" class="label label-<%= @colours[0][0] %>">Open: <%= completion_data[0] %></span>
@@ -97,9 +98,6 @@
 
 <div class="wrap">
     <div class="row">
-        <% labels = [] %>
-        <% @survey.sensitivity_categories.each do |cat| labels << cat.title %>
-        <% end %>
         <% @survey.cards.each do |card| %>
             <!-- display canvas for graph -->
             <div class="col-xs-4">
@@ -115,21 +113,51 @@
                         <% else %>
                             <!-- output the data in divs here -->
                             <% data = [] %>
-                            <% #data[:labels] = labels %>
                             <% @survey.sensitivity_categories.each_with_index do |category, i| %>
                                 <% p = (@survey_run.proportion_card_assigned_to_category(card, category)*100).round(2) %>
                                 <% data << { value: p,
                                             color: @colours[i][1]
                                             } %>
+
                                 <span class="label label-<%= @colours[i][0] %>"><%= category.title %>: <%= p %>%</span>
                             <% end %>
                         <% end %>
                     </div>
-                    <!-- collect the data into content tag -->
                     <%= content_tag :div, class: 'card-assignment-data', data: { proportions: data } do %><% end %>
                 </div>
             </div>
+        <% end %>
+    </div>
+</div>
 
+<h2>Sharing phase</h2>
+<% sharing_data_labels = [] %>
+<% @survey.recipients.each do |r| sharing_data_labels << r.role %>
+<% end %>
+
+<div class="wrap">
+    <div class="row">
+        <% @survey.cards.each do |card| %>
+            <% sharing_data = [] %>
+            <% @survey.recipients.each do |recipient| %>
+                <% sharing_data << @survey_run.number_times_card_assigned_to_recipient(card, recipient) %>
+            <% end %>
+            <% sharing_data_frame = { labels: sharing_data_labels,
+                                     datasets: [ { fillColor: @colours[1][1],
+                                                  strokeColor: @colours[1][1],
+                                                  data: sharing_data } ] } %> 
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><%= card.title %></div>
+                    <div class="panel-body">
+                        <canvas class="sharing-preference-bars" width="400" height="100">
+                        </canvas>
+                        <!-- collect the data into content tag -->
+                        <%= content_tag :div, class: 'sharing-data', data: { sharing_prefs: sharing_data_frame } do %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
         <% end %>
     </div>
 </div>
