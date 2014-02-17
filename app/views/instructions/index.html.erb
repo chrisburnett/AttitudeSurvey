@@ -57,7 +57,7 @@ You must be <strong>ordinarily resident</strong> in the UK in order to participa
 
 
 <%= link_to 'Begin survey', new_survey_response_path, id: "begin-button", class: "btn btn-primary disabled" %>
-<%= if params[:subsid] then link_to 'Return to Research Now', AttitudeSurvey::Application.config.referrer_screenout_link, id: "screenout-button", class: "btn btn-primary" end %>
+<%= if params[:subsid] then link_to 'Return to Research Now', AttitudeSurvey::Application.config.referrer_screenout_link + '?subsid=' + params[:subsid], id: "screenout-button", class: "btn btn-primary" end %>
 
 
 <hr>

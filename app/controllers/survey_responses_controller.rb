@@ -2,18 +2,19 @@ class SurveyResponsesController < ApplicationController
 
   def new
     @survey = active_survey
-    @survey_response = active_survey_run.survey_responses.build
-    # add the card placements
-    @survey.cards.each do |card|
-      @survey_response.card_placements.build(card_id: card.id)
-    end
-    # create questionnaire response
-    @questionnaire_response = @survey_response.build_questionnaire_response
-    # set start time
-    @survey_response.start_time = Time.now
-    # send the recipient cards to javascript so we can page through them without refreshing
-    gon.recipients = @survey.recipients
-  endx
+
+      @survey_response = active_survey_run.survey_responses.build
+      # add the card placements
+      @survey.cards.each do |card|
+        @survey_response.card_placements.build(card_id: card.id)
+      end
+      # create questionnaire response
+      @questionnaire_response = @survey_response.build_questionnaire_response
+      # set start time
+      @survey_response.start_time = Time.now
+      # send the recipient cards to javascript so we can page through them without refreshing
+      gon.recipients = @survey.recipients
+  end
 
   def create
     
@@ -77,7 +78,7 @@ class SurveyResponsesController < ApplicationController
 
   private
   def survey_response_params
-    params.require(:survey_response).permit(:id, :rnid, :back, :current_phase, :commit, :start_time, card_placements_attributes: [:id, :card_id, :sensitivity_category_id], sharing_prefs_attributes: [:id, :recipient_id, :card_id, :share], questionnaire_response_attributes: [:id, :gender, :employment_status, :age_range, :open_feedback, :app_user, :worked_in_healthcare, :worked_in_healthcare_occupation])
+    params.require(:survey_response).permit(:id, :subsid, :rnid, :back, :current_phase, :commit, :start_time, card_placements_attributes: [:id, :card_id, :sensitivity_category_id], sharing_prefs_attributes: [:id, :recipient_id, :card_id, :share], questionnaire_response_attributes: [:id, :gender, :employment_status, :age_range, :open_feedback, :app_user, :worked_in_healthcare, :worked_in_healthcare_occupation])
   end
 
   # def next_phase(current_phase)

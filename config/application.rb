@@ -26,7 +26,10 @@ module AttitudeSurvey
     # links to external referrer (i.e. ResearchNow)
     config.referrer_complete_link = ""
     config.referrer_screenout_link = ""
-    config.referrer_quotafull_link = ""
+    config.referrer_quotafull_link = "http://www.kasiaichris.com"
     
+    # number of responses to allow from external referrer
+    config.referrer_quota = 2
+
   end
 end
