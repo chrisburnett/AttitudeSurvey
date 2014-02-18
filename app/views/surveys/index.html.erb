@@ -15,7 +15,8 @@
                     <div class="col-md-3">
                         <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-file'), survey_survey_runs_path(survey), method: :post %> &nbsp;&nbsp;
                         <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-edit'), edit_survey_path(survey) %> &nbsp;&nbsp;
-                        <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-trash'), survey, method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-trash'), survey, method: :delete, data: { confirm: 'Are you sure?' } %> &nbsp;&nbsp;
+                        <%= link_to content_tag(:i, "" ,:class=>'glyphicon glyphicon-plus-sign'), surveys_path(id: survey.id), method: :post %> 
                     </div>
                 </div>
             </div>

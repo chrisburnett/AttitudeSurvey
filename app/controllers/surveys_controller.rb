@@ -40,7 +40,12 @@ class SurveysController < ApplicationController
   # POST /surveys
   # POST /surveys.json
   def create
-    @survey = Survey.new(survey_params)
+    # if we are passed an ID, then create a duplicate of the survey with that ID
+    if(params[:id]) then
+      @survey = Survey.find(params[:id]).duplicate_survey
+    else
+      @survey = Survey.new(survey_params)
+    end
     @survey_run = @survey.survey_runs.build
     if SurveyRun.count == 0
     then @survey_run.active = true
