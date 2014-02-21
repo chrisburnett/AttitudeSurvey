@@ -29,7 +29,7 @@ module AttitudeSurvey
     config.referrer_quotafull_link = "http://redirects.researchnow.com/44217870redirect.asp?status=3&subsid="
     
     # number of responses to allow from external referrer
-    config.referrer_quota = 5
+    config.referrer_quota = 300
 
   end
 end
