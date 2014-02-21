@@ -78,7 +78,10 @@ class SurveyResponsesController < ApplicationController
 
   private
   def survey_response_params
-    params.require(:survey_response).permit(:id, :subsid, :rnid, :back, :current_phase, :commit, :start_time, card_placements_attributes: [:id, :card_id, :sensitivity_category_id], sharing_prefs_attributes: [:id, :recipient_id, :card_id, :share], questionnaire_response_attributes: [:id, :gender, :employment_status, :age_range, :open_feedback, :app_user, :worked_in_healthcare, :worked_in_healthcare_occupation])
+    params.require(:survey_response).permit(:id, :subsid, :rnid, :back, :current_phase, :commit, :start_time, 
+                                            card_placements_attributes: [:id, :card_id, :sensitivity_category_id], 
+                                            sharing_prefs_attributes: [:id, :recipient_id, :card_id, :share], 
+                                            questionnaire_response_attributes: [:id, :gender, :employment_status, :age_range, :open_feedback, :app_user, :worked_in_healthcare, :worked_in_healthcare_occupation])
   end
 
   # def next_phase(current_phase)

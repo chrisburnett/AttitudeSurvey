@@ -2,9 +2,9 @@
 
 <%= javascript_tag do %>
     var subsid = '<%= session[:subsid] %>';
-    var complete_link = '<%= AttitudeSurvey::Application.config.referrer_complete_link %>';
-    var screenout_link = '<%= AttitudeSurvey::Application.config.referrer_screenout_link %>';
-    var quotafull_link = '<%= AttitudeSurvey::Application.config.referrer_quotafull_link %>';
+    var complete_link = '<%= raw(AttitudeSurvey::Application.config.referrer_complete_link) %>';
+    var screenout_link = '<%= raw(AttitudeSurvey::Application.config.referrer_screenout_link) %>';
+    var quotafull_link = '<%= raw(AttitudeSurvey::Application.config.referrer_quotafull_link) %>';
 <% end %>
 
 <% offset_amount = 2 %>
