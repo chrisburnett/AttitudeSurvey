@@ -24,12 +24,12 @@ module AttitudeSurvey
     # config.i18n.default_locale = :de
 
     # links to external referrer (i.e. ResearchNow)
-    config.referrer_complete_link = ""
-    config.referrer_screenout_link = ""
-    config.referrer_quotafull_link = "http://www.kasiaichris.com"
+    config.referrer_complete_link = "http://redirects.researchnow.com/44217870redirect.asp?status=1&subsid="
+    config.referrer_screenout_link = "http://redirects.researchnow.com/44217870redirect.asp?status=2&subsid="
+    config.referrer_quotafull_link = "http://redirects.researchnow.com/44217870redirect.asp?status=3&subsid="
     
     # number of responses to allow from external referrer
-    config.referrer_quota = 2
+    config.referrer_quota = 5
 
   end
 end
