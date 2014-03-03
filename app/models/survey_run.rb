@@ -3,7 +3,10 @@ class SurveyRun < ActiveRecord::Base
   belongs_to :survey
   has_many :survey_responses, dependent: :destroy
 
-  
+  def self.active_survey_run
+    find_by(active: true)
+  end
+
   # return the % of the time this card was assigned to this category
   def proportion_card_assigned_to_category(card, category)
     card_count = survey.cards.length

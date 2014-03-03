@@ -1,9 +1,9 @@
 class SurveyResponsesController < ApplicationController
 
   def new
-    @survey = active_survey
+    @survey = Survey.active_survey
 
-      @survey_response = active_survey_run.survey_responses.build
+      @survey_response = SurveyRun.active_survey_run.survey_responses.build
       # add the card placements
       @survey.cards.each do |card|
         @survey_response.card_placements.build(card_id: card.id)
@@ -18,7 +18,7 @@ class SurveyResponsesController < ApplicationController
 
   def create
     
-    @survey_run = active_survey_run
+    @survey_run = SurveyRun.active_survey_run
     @survey_response = @survey_run.survey_responses.build(survey_response_params)
     # if we have an externally provided ID in the session, set it
     @survey_response.rnid = session[:subsid]
@@ -34,7 +34,7 @@ class SurveyResponsesController < ApplicationController
   end
 
   def update
-    @survey = active_survey
+    @survey = Survey.active_survey
     @survey_response = SurveyResponse.find(params[:id])
     @survey_response.update(survey_response_params)
 
@@ -60,12 +60,6 @@ class SurveyResponsesController < ApplicationController
       format.json { render json: @survey_response, include: [:card_placements, :sharing_prefs] }
     end
   end
-
-  # def index
-  #   @survey = active_survey
-  #   @survey_run = active_survey_run
-  #   @survey_responses = @survey_run.survey_responses
-  # end
 
   def destroy
     @survey_response = SurveyResponse.find(params[:id])
@@ -107,14 +101,6 @@ class SurveyResponsesController < ApplicationController
 
   #end
 
-  def active_survey_run
-    SurveyRun.find_by(active: true)
-  end
 
-
-  def active_survey
-    # get currently active survey run and its survey
-    active_survey_run.survey
-  end
 
 end

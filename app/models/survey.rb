@@ -28,4 +28,10 @@ class Survey < ActiveRecord::Base
     end
     return survey
   end
+
+  def self.active_survey
+    # get currently active survey run and its survey
+    SurveyRun.active_survey_run.survey
+  end
+
 end
