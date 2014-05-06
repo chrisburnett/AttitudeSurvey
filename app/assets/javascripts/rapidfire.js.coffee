@@ -7,6 +7,8 @@ ready = ->
                 all_off()
                 color = $(this).css('border-color')
                 $(this).css('background', color)
+                category_id = $(this).find('div').attr('id').split('-')[1];
+                $('input[id^="survey_response_card_placement"][id$="card_id"][value=' + card_id + ']').next('input').val(category_id);
 
 all_off = ->
         $('.category-button').css('background', 'none')
