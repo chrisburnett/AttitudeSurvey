@@ -26,19 +26,19 @@
   border-style: dashed;
   background: none;
   border-width: 3px;
+  color: #2D3E4F;
 }
 
 .low {
-  border-color: #7CFCa4;
-  color: #004D13;
+  border-color: #3498db;
 }
 
 .medium {
-  border-color: #FFF570;
-  color: #464D00;
+  border-color: #f39c12;
+
 }
 
 .high {
-  border-color: #FF9B70;
-  color: #613200;
+  border-color: #e74c3c;
+
 }

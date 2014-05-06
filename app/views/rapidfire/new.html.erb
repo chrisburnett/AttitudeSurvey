@@ -15,31 +15,66 @@
     categories = @survey.sensitivity_categories.to_a.dup
     %>
 
-    <div id="card-display">
-        <p>Please indicate how sensitive you feel the following information is:</p>
+
+    
+    <div id="question-section">
+        <div id="card-display">
+            <p>Please indicate how sensitive you feel the following information is:</p>
+            <h1 class="text-center"><%= @card.title  %></h1>
+            <h4 class="text-center"><%= @card.description%></h4>
+        </div>
+        <div class="container-fixed" id="card-drop-area-container">
+            <div class="row">
+                <% color_classes = ['low','medium','high'] %>
+                <% categories.each_with_index do |category, index| %>
+                    <div class="col-xs-4 category-button-outer category-button <%= color_classes[index] %>">
+                        <div id="category-<%= category[:id] %>">
+                            <h1><%= category[:title] %></h1>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            <div class="row">
+                <%= s.submit 'Next', class: "btn btn-primary form-control" %>
+            </div>
+        </div>
+
+        <%= s.fields_for :card_placements do |cp| %>
+            <%= render "survey_responses/card_placement_fields", f: cp %>
+        <% end %>
+    </div>
+<% end %>
+
+
+<!-- RESULTS DISPLAY PHASE -->
+
+
+<div id="results-section" hidden>
+
+    <div id="result-display">
+        <p>How our population responded about the sensitivity of:</p>
         <h1 class="text-center"><%= @card.title  %></h1>
         <h4 class="text-center"><%= @card.description%></h4>
     </div>
-    
-    
-    <div class="container-fixed" id="card-drop-area-container">
-        <div class="row">
-            <% color_classes = ['low','medium','high'] %>
-            <% categories.each_with_index do |category, index| %>
-                <div class="col-xs-4 category-button-outer category-button <%= color_classes[index] %>">
-                    <div id="category-<%= category[:id] %>">
-                        <h1><%= category[:title] %></h1>
-                    </div>
-                </div>
-            <% end %>
-        </div>
-        <div class="row">
-            <%= s.submit 'Next', class: "btn btn-primary form-control" %>
-        </div>
-    </div>
+    <canvas class="card-assignment-pie center-block" width="400" height="400">
+    </canvas>
 
-    <%= s.fields_for :card_placements do |cp| %>
-        <%= render "survey_responses/card_placement_fields", f: cp %>
+    <!-- output the data in divs here -->
+    <% data = [] %>
+    <% @colours = {info: '#3498db',
+                   warning: '#f39c12',
+                   danger: '#e74c3c' }.to_a  %>
+    <div>
+        <h3 class="text-center">
+        <% @survey.sensitivity_categories.each_with_index do |category, i| %>
+            <% p = (@survey.proportion_card_assigned_to_category(@card, category)*100).round(2) %>
+            <% data << { value: p,
+                        color: @colours[i][1]
+                        } %>
+            <span class="label label-<%= @colours[i][0] %>"><%= category.title %>: <%= p %>%</span>
+        <% end %>
+        </h3>
+    </div>
+    <%= content_tag :div, class: 'card-assignment-data', data: { proportions: data } do %>
     <% end %>
-    
-<% end %>
+</div>    

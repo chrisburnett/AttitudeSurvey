@@ -10,14 +10,13 @@ class RapidfireController < ApplicationController
     @survey_response = SurveyRun.active_survey_run.survey_responses.build
     #horribly inefficient, but we know we will not have a big number
     #of cards or accesses
-    @card = Card.all.sample
+    @card = @survey.cards.all.sample
     # create a placement object for the card we got
     @survey_response.card_placements.build(card_id: @card.id)
   end
 
-  # save the response and display the shiny result page
-  def create
-  end
+  # no need for create method - automatically goes to surveyresponse
+  # handler because of the form_for method
 
   # no need for edit/update/delete - each rapidfire response will be
   # saved as a new surveyresponse - very simple loop
