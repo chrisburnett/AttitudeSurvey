@@ -40,16 +40,13 @@ class Survey < ActiveRecord::Base
     # get the number of responses to all runs of this survey
     response_count = 0
     survey_runs.each do |run|
-      response_count = 0
       # only count responses which have an answer for this card
       run.survey_responses.each do |response|
         if (response.card_placements.find_by card_id: card.id) != nil
           response_count += 1
         end
       end
-    end
-    puts "KHGJDGHD #{response_count}"
-    
+    end    
     
     # get the number of responses which assigned this card to this category
     card_to_cat_count = 0
