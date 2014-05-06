@@ -24,3 +24,5 @@ shellout
 deploy.sh
 .env
 /shellout
+
+/app/assets/stylesheets/.sass-cache
