@@ -25,3 +25,11 @@ production:
   password: 2SqUA4c2XMVvx7SNLs2_ZlSdQM
   pool: 5
   timeout: 5000
+
+heroku:
+  adapter: postgresql
+  database: survey
+  user: dameramu
+  password: dameramu
+  pool: 5
+  timeout: 5000
