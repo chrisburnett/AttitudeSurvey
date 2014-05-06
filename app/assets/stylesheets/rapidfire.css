@@ -1,0 +1,44 @@
+#card-display {
+  padding: 5px;
+}
+
+.category-button-description {
+  color: #18bc9c;
+  vertical-align: middle;
+  text-align: center;  
+}
+
+.category-button-outer {
+  /*width: 47%;  for 2 columns */
+  width: 31%; /* for 3 columns */
+  margin: 0 2% 15px 0;
+  padding-bottom: 20%;
+  padding-top:60px;
+  min-height: 100%;
+  border-width: 2px;
+  border-radius: 5px;
+  overflow: visible;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.category-button {
+  border-style: dashed;
+  background: none;
+  border-width: 3px;
+}
+
+.low {
+  border-color: #7CFCa4;
+  color: #004D13;
+}
+
+.medium {
+  border-color: #FFF570;
+  color: #464D00;
+}
+
+.high {
+  border-color: #FF9B70;
+  color: #613200;
+}

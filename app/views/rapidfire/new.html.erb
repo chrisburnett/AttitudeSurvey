@@ -1,0 +1,36 @@
+<%= form_for @survey_response, remote: true do |s| %>
+
+    <%
+    cat_count = @survey.sensitivity_categories.count
+    # integer division gives us the number of rows
+    row_count = (cat_count/3)
+    if cat_count%3 > 0
+        then row_count = row_count + 1
+    end
+    col_count = 3 # hardcoding this - want 3 columns
+    categories = @survey.sensitivity_categories.to_a.dup
+    %>
+
+    <div id="card-display">
+        <p>Please indicate how sensitive you feel the following information is:</p>
+        <h1 class="text-center"><%= @card.title  %></h1>
+        <h4 class="text-center"><%= @card.description%></h4>
+    </div>
+    
+    
+    <div class="container-fixed" id="card-drop-area-container">
+        <div class="row">
+            <!--  TODO: THIS NEEDS TO CHANGE TO BUTTONS NOT DROP AREA in JS -->
+            <% color_classes = ['low','medium','high'] %>
+            <% categories.each_with_index do |category, index| %>
+                <div class="col-xs-4 category-button-outer category-button <%= color_classes[index] %>">
+                    <div id="category-<%= category[:id] %>">
+                        <h1><%= category[:title] %></h1>
+                        <p><%= category[:description] %></p>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    
+<% end %>

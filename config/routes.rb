@@ -8,6 +8,8 @@ AttitudeSurvey::Application.routes.draw do
 
   get '/admin', to: 'surveys#index'
 
+  get '/rapidfire', to: 'rapidfire#new'
+
   resources :cards
   resources :recipients
   resources :sensitivity_categories
