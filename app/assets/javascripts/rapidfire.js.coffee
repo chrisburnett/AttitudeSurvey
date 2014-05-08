@@ -19,7 +19,7 @@ ready = ->
         $('button').on 'click', (event) ->
                 if(recipient_id?)
                         # this will be the case if 'yes' was selected
-                        answer = if $('.category-button low').css('color') == '#FFFFFF' then 'false' else 'true'
+                        answer = if $('.category-button.low').css('color') == 'rgb(255, 255, 255)' then 'true' else 'false'
                         pref = [{'recipient_id': recipient_id, 'card_id': card_id, 'share': answer }]
                         data = {'survey_response': {'sharing_prefs_attributes':pref }}
                         
@@ -28,6 +28,8 @@ ready = ->
                                 type: 'POST'
                                 contentType: 'application/json; charset=utf8'
                                 data: JSON.stringify(data)
+                                success: (data, textStatus, jqXHR) ->
+                                        $('#question-section').replaceWith((event) -> $('#results-section').show())
 
 
 all_off = ->

@@ -11,7 +11,7 @@ class RapidfireController < ApplicationController
     @card = @survey.cards.all.sample
     @sensitivity_question = false
     # randomly choose a question type
-    if rand < 0.5
+    if rand > 0.5
       # create a placement object for the card we got
       @survey_response.card_placements.build(card_id: @card.id)
       @sensitivity_question = true

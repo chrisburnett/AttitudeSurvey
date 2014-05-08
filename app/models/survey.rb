@@ -60,4 +60,22 @@ class Survey < ActiveRecord::Base
   end
 
 
+  # return the proportion of responses, in all runs of this survey,
+  # who said they would share this card with this recipient
+  def proportion_would_share(card, recipient)
+    responses_count = 0
+    would_share_count = 0
+    survey_runs.each do |run| 
+      # only count responses which have an answer for this card/recipient
+      run.survey_responses.each do |response|
+        r = response.sharing_prefs.find_by card_id: card.id, recipient_id: recipient.id
+        if r != nil then 
+          responses_count += 1
+          if r.share == true then would_share_count += 1 end
+        end
+      end
+    end
+    would_share_count.to_f / responses_count.to_f
+  end
+
 end
