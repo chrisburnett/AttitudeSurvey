@@ -1,0 +1,32 @@
+<%= form_for @survey_response, remote: true do |s| %>
+
+    <div id="question-section">
+        <div id="card-display">
+            <p class="text-center">Please indicate how sensitive you feel the following information is:</p>
+            <h1 class="text-center"><%= @card.title  %></h1>
+            <h4 class="text-center"><%= @card.description%></h4>
+        </div>
+        <div class="container-fixed" id="card-drop-area-container">
+            <div class="row">
+                <% color_classes = ['low','medium','high'] %>
+                <% categories = @survey.sensitivity_categories.to_a.dup %>
+                <% categories.each_with_index do |category, index| %>
+                    <div class="col-xs-4">
+                        <div class="category-button-outer category-button <%= color_classes[index] %>">
+                            <div id="category-<%= category[:id] %>">
+                                <h1><%= category[:title] %></h1>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            <div class="row">
+                <%= s.submit 'Next', class: "btn btn-primary form-control" %>
+            </div>
+        </div>
+
+        <%= s.fields_for :card_placements do |cp| %>
+            <%= render "survey_responses/card_placement_fields", f: cp %>
+        <% end %>
+    </div>
+<% end %>
