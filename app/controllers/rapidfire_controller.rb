@@ -8,13 +8,19 @@ class RapidfireController < ApplicationController
   def new
     @survey = Survey.active_survey
     @survey_response = SurveyRun.active_survey_run.survey_responses.build
-    #horribly inefficient, but we know we will not have a big number
-    #of cards or accesses
     @card = @survey.cards.all.sample
-    # create a placement object for the card we got
-    @survey_response.card_placements.build(card_id: @card.id)
+    @sensitivity_question = false
+    # randomly choose a question type
+    if rand < 0.5
+      # create a placement object for the card we got
+      @survey_response.card_placements.build(card_id: @card.id)
+      @sensitivity_question = true
+    else
+      # for a sharing question, we need a recipient and a card
+      @recipient = @survey.recipients.all.sample
+      @survey_response.sharing_prefs.build(card_id: @card.id, recipient_id: @recipient.id)
+    end
   end
-
   # no need for create method - automatically goes to surveyresponse
   # handler because of the form_for method
 

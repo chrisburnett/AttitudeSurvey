@@ -10,15 +10,15 @@
 
 .category-button-outer {
   /*width: 47%;  for 2 columns */
-  width: 31%; /* for 3 columns */
+  /*width: 31%; /* for 3 columns */
   margin: 0 2% 15px 0;
   padding-bottom: 20%;
-  padding-top:60px;
+  padding-top:50px;
   min-height: 100%;
   border-width: 2px;
   border-radius: 5px;
   overflow: visible;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   text-align: center;
 }
 
