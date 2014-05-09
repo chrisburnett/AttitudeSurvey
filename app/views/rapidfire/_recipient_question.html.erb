@@ -1,7 +1,7 @@
 <div id="question-section">
     <div id="card-display">
-        <p class="text-center">Would you feel comfortable sharing information about:</p>
-        <h1 class="text-center"><%= @card.title  %> with <%= @recipient.role %>?</h1>
+        <h3 class="text-center">Would you feel comfortable sharing information about:</h3>
+        <h1 class="text-center"><%= @card.title.downcase  %> with <%= @recipient.role.downcase %>?</h1>
     </div>
     <div class="container-fixed" id="card-drop-area-container">
         <div class="row">
