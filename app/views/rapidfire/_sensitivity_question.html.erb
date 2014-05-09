@@ -9,7 +9,7 @@
         <div class="container-fixed" id="card-drop-area-container">
             <div class="row">
                 <% color_classes = ['low','medium','high'] %>
-                <% categories = @survey.sensitivity_categories.order(display_name: :asc).to_a.dup %>
+                <% categories = @survey.sensitivity_categories.order(display_order: :asc).to_a.dup %>
                 <% categorie.each_with_index do |category, index| %>
                     <div class="col-xs-4">
                         <div class="category-button-outer category-button <%= color_classes[index] %>">

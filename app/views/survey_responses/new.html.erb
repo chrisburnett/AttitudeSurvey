@@ -149,7 +149,7 @@
                     </div>
                     <div class="col-xs-4 pull-right">
                         <div id="card-deck" class="btn-group"></div>
-                        <% @survey.cards.order(display_name: :asc).each_with_index do |card, i| %>
+                        <% @survey.cards.order(display_order: :asc).each_with_index do |card, i| %>
                             <% offset = i * offset_amount %>
                             <div class="card-holder">
                                 <div class="card movable" id="card-<%= card.id %>" data-description="<%=card.description %>" style="bottom: <%= offset %>px; right: <%= offset * 0.7 %>px">
