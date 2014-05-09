@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140116120522) do
+ActiveRecord::Schema.define(version: 20140508235738) do
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20140116120522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "survey_id"
+    t.integer  "display_order"
   end
 
   add_index "sensitivity_categories", ["survey_id"], name: "index_sensitivity_categories_on_survey_id"
