@@ -15,7 +15,7 @@
                    danger: '#e74c3c' }.to_a  %>
     <div>
         <h3 class="text-center">
-        <% @survey.sensitivity_categories.each_with_index do |category, i| %>
+        <% @survey.sensitivity_categories.order(display_order: :asc).each_with_index do |category, i| %>
             <% p = (@survey.proportion_card_assigned_to_category(@card, category)*100).round(2) %>
             <% data << { value: p,
                         color: @colours[i][1]
