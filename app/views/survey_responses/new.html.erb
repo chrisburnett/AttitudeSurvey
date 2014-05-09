@@ -104,7 +104,7 @@
         then row_count = row_count + 1
     end
     col_count = 3 # hardcoding this - want 3 columns
-    categories = @survey.sensitivity_categories.to_a.dup
+    categories = @survey.sensitivity_categories.order(display_order: :asc).to_a.dup
     %>
     <div id="main-phase">
         <div class="container-fixed" id="card-drop-area-container">
@@ -149,7 +149,7 @@
                     </div>
                     <div class="col-xs-4 pull-right">
                         <div id="card-deck" class="btn-group"></div>
-                        <% @survey.cards.order(display_order: :asc).each_with_index do |card, i| %>
+                        <% @survey.cards.each_with_index do |card, i| %>
                             <% offset = i * offset_amount %>
                             <div class="card-holder">
                                 <div class="card movable" id="card-<%= card.id %>" data-description="<%=card.description %>" style="bottom: <%= offset %>px; right: <%= offset * 0.7 %>px">
