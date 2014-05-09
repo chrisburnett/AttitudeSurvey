@@ -56,7 +56,7 @@ class Survey < ActiveRecord::Base
         .where(card_placements: 
                {card_id: card.id, sensitivity_category_id: category.id}).length
     end
-    card_to_cat_count.to_f / response_count.to_f
+    (card_to_cat_count.to_f / response_count.to_f).round(2)
   end
 
 
@@ -75,7 +75,7 @@ class Survey < ActiveRecord::Base
         end
       end
     end
-    would_share_count.to_f / responses_count.to_f
+    (would_share_count.to_f / responses_count.to_f).round(2)
   end
 
 end
