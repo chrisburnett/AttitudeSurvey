@@ -136,7 +136,7 @@
 
 <h2>Sharing phase</h2>
 <% sharing_data_labels = [] %>
-<% @survey.recipients.each do |r| sharing_data_labels << acronymize(r.role) %>
+<% @survey.recipients.each do |r| sharing_data_labels << r.role #<< acronymize(r.role) %>
 <% end %>
 
 <div class="wrap">
@@ -150,11 +150,11 @@
                                      datasets: [ { fillColor: @colours[1][1],
                                                   strokeColor: @colours[1][1],
                                                   data: sharing_data } ] } %> 
-            <div class="col-xs-6">
+            <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading"><%= card.title %></div>
                     <div class="panel-body">
-                        <canvas class="sharing-preference-bars" width="300" height="200">
+                        <canvas class="sharing-preference-bars" width="700" height="200">
                         </canvas>
                         <!-- collect the data into content tag -->
                         <%= content_tag :div, class: 'sharing-data', data: { sharing_prefs: sharing_data_frame } do %>
