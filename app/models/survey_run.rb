@@ -41,5 +41,27 @@ class SurveyRun < ActiveRecord::Base
     ((share_count.to_f / response_count.to_f) * 100).to_i
   end
 
+  # get the proportions of sensitivity given a card-recipient assignment
+  def sensitivities_assigned_to_recipient(card, recipient)
+    share_count = 
+      survey_responses
+      .joins(:sharing_prefs)
+      .where(sharing_prefs:
+             {recipient_id: recipient.id, card_id: card.id, share: true}).length
+
+    sensitivity_counts = { total: share_count }
+    self.survey.sensitivity_categories.each do |sc| 
+      sensitivity_counts[sc.title] =
+        ((survey_responses
+        .joins(:sharing_prefs, :card_placements)
+        .where(sharing_prefs:
+               {recipient_id: recipient.id, card_id: card.id, share: true},
+               card_placements:
+               {card_id: card.id, 
+                 sensitivity_category_id: sc.id}).length.to_f / share_count.to_f)*100).round(2)
+    end
+    sensitivity_counts
+  end
+
 end
 
