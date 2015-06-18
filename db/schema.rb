@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140PPPP508235738) do
+ActiveRecord::Schema.define(version: 20140508235738) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -21,8 +24,8 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.datetime "updated_at"
   end
 
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
-  add_index "answers", ["survey_response_id"], name: "index_answers_on_survey_response_id"
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
+  add_index "answers", ["survey_response_id"], name: "index_answers_on_survey_response_id", using: :btree
 
   create_table "card_placements", force: true do |t|
     t.integer  "card_id"
@@ -32,9 +35,9 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.datetime "updated_at"
   end
 
-  add_index "card_placements", ["card_id"], name: "index_card_placements_on_card_id"
-  add_index "card_placements", ["sensitivity_category_id"], name: "index_card_placements_on_sensitivity_category_id"
-  add_index "card_placements", ["survey_response_id"], name: "index_card_placements_on_survey_response_id"
+  add_index "card_placements", ["card_id"], name: "index_card_placements_on_card_id", using: :btree
+  add_index "card_placements", ["sensitivity_category_id"], name: "index_card_placements_on_sensitivity_category_id", using: :btree
+  add_index "card_placements", ["survey_response_id"], name: "index_card_placements_on_survey_response_id", using: :btree
 
   create_table "cards", force: true do |t|
     t.string   "title"
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.datetime "updated_at"
   end
 
-  add_index "choices", ["multi_choice_question_id"], name: "index_choices_on_multi_choice_question_id"
+  add_index "choices", ["multi_choice_question_id"], name: "index_choices_on_multi_choice_question_id", using: :btree
 
   create_table "multi_choice_questions", force: true do |t|
     t.integer  "question_id"
@@ -60,7 +63,7 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.datetime "updated_at"
   end
 
-  add_index "multi_choice_questions", ["question_id"], name: "index_multi_choice_questions_on_question_id"
+  add_index "multi_choice_questions", ["question_id"], name: "index_multi_choice_questions_on_question_id", using: :btree
 
   create_table "questionnaire_responses", force: true do |t|
     t.integer  "survey_response_id"
@@ -75,7 +78,7 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.string   "worked_in_healthcare_occupation"
   end
 
-  add_index "questionnaire_responses", ["survey_response_id"], name: "index_questionnaire_responses_on_survey_response_id"
+  add_index "questionnaire_responses", ["survey_response_id"], name: "index_questionnaire_responses_on_survey_response_id", using: :btree
 
   create_table "questions", force: true do |t|
     t.string   "question"
@@ -94,7 +97,7 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.integer  "survey_id"
   end
 
-  add_index "recipients", ["survey_id"], name: "index_recipients_on_survey_id"
+  add_index "recipients", ["survey_id"], name: "index_recipients_on_survey_id", using: :btree
 
   create_table "sensitivity_categories", force: true do |t|
     t.string   "title"
@@ -105,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.integer  "display_order"
   end
 
-  add_index "sensitivity_categories", ["survey_id"], name: "index_sensitivity_categories_on_survey_id"
+  add_index "sensitivity_categories", ["survey_id"], name: "index_sensitivity_categories_on_survey_id", using: :btree
 
   create_table "sharing_prefs", force: true do |t|
     t.integer  "card_id"
@@ -116,9 +119,9 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.boolean  "share"
   end
 
-  add_index "sharing_prefs", ["card_id"], name: "index_sharing_prefs_on_card_id"
-  add_index "sharing_prefs", ["recipient_id"], name: "index_sharing_prefs_on_recipient_id"
-  add_index "sharing_prefs", ["survey_response_id"], name: "index_sharing_prefs_on_survey_response_id"
+  add_index "sharing_prefs", ["card_id"], name: "index_sharing_prefs_on_card_id", using: :btree
+  add_index "sharing_prefs", ["recipient_id"], name: "index_sharing_prefs_on_recipient_id", using: :btree
+  add_index "sharing_prefs", ["survey_response_id"], name: "index_sharing_prefs_on_survey_response_id", using: :btree
 
   create_table "slider_questions", force: true do |t|
     t.integer  "question_id"
@@ -128,7 +131,7 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.datetime "updated_at"
   end
 
-  add_index "slider_questions", ["question_id"], name: "index_slider_questions_on_question_id"
+  add_index "slider_questions", ["question_id"], name: "index_slider_questions_on_question_id", using: :btree
 
   create_table "survey_responses", force: true do |t|
     t.string   "rnid"
@@ -139,7 +142,7 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.datetime "finish_time"
   end
 
-  add_index "survey_responses", ["survey_run_id"], name: "index_survey_responses_on_survey_run_id"
+  add_index "survey_responses", ["survey_run_id"], name: "index_survey_responses_on_survey_run_id", using: :btree
 
   create_table "survey_runs", force: true do |t|
     t.datetime "created_at"
@@ -163,6 +166,6 @@ ActiveRecord::Schema.define(version: 20140PPPP508235738) do
     t.datetime "updated_at"
   end
 
-  add_index "text_questions", ["question_id"], name: "index_text_questions_on_question_id"
+  add_index "text_questions", ["question_id"], name: "index_text_questions_on_question_id", using: :btree
 
 end
